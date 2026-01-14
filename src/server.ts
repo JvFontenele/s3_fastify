@@ -9,9 +9,13 @@ import {
 import { fastifySwagger } from "@fastify/swagger";
 import { fastifyCors } from "@fastify/cors";
 import ScalarApiReference from "@scalar/fastify-api-reference";
-import { routes } from "@/routes";
 
-const app = fastify().withTypeProvider<ZodTypeProvider>();
+import { prismaPlugin } from "./plugins/prisma";
+// import { routes } from "@/routes";
+
+const app = fastify({
+  logger: true,
+}).withTypeProvider<ZodTypeProvider>();
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
@@ -21,8 +25,6 @@ app.register(fastifyCors, {
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
 });
-
-
 
 app.register(fastifySwagger, {
   openapi: {
@@ -39,7 +41,9 @@ app.register(ScalarApiReference, {
   routePrefix: "/docs",
 });
 
-app.register(routes);
+app.register(prismaPlugin);
+
+// app.register(routes);
 
 app.listen({ port: 3333, host: "0.0.0.0" }).then(() => {
   console.log("HTTP Server Running on http://localhost:3333");

@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../prisma/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  email     String   @unique
+  createdAt DateTime @default(now())
+
+  series Series[]
+}
+
+model Series {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  coverKey    String?
+  coverUrl    String?
+  createdAt   DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  chapters Chapter[]
+}
+
+model Chapter {
+  id        String   @id @default(cuid())
+  title     String
+  number    Int
+  createdAt DateTime @default(now())
+
+  seriesId String
+  series   Series @relation(fields: [seriesId], references: [id])
+
+  pages Page[]
+
+  @@unique([seriesId, number])
+}
+
+model Page {
+  id        String   @id @default(cuid())
+  order     Int
+  type      FileType
+  fileKey   String
+  fileUrl   String
+  mimeType  String
+  size      Int
+  createdAt DateTime @default(now())
+
+  chapterId String
+  chapter   Chapter @relation(fields: [chapterId], references: [id])
+
+  @@unique([chapterId, order])
+}
+
+enum FileType {
+  IMAGE
+  PDF
+}

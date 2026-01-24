@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   username  String   @unique
   email     String   @unique
   createdAt DateTime @default(now())
@@ -17,26 +17,26 @@ model User {
 }
 
 model Series {
-  id          String   @id @default(cuid())
+  id          Int      @id @default(autoincrement())
   title       String
   description String?
   coverKey    String?
   coverUrl    String?
   createdAt   DateTime @default(now())
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
 
   chapters Chapter[]
 }
 
 model Chapter {
-  id        String   @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   title     String
   number    Int
   createdAt DateTime @default(now())
 
-  seriesId String
+  seriesId Int
   series   Series @relation(fields: [seriesId], references: [id])
 
   pages Page[]
@@ -45,7 +45,7 @@ model Chapter {
 }
 
 model Page {
-  id        String   @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   order     Int
   type      FileType
   fileKey   String
@@ -54,7 +54,7 @@ model Page {
   size      Int
   createdAt DateTime @default(now())
 
-  chapterId String
+  chapterId Int
   chapter   Chapter @relation(fields: [chapterId], references: [id])
 
   @@unique([chapterId, order])

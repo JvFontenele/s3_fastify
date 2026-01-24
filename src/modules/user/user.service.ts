@@ -3,8 +3,9 @@ import { BaseService } from '@/shared/BaseService';
 import { CreateUserBody } from './user.schema';
 
 export class UserService extends BaseService {
-  async findAll() {
-    return this.prisma.user.findMany();
+  async findAll({ skip, take }: { skip: number; take: number }) {
+    const [data, total] = await Promise.all([this.prisma.user.findMany({ skip, take }), this.prisma.user.count()]);
+    return { data, total };
   }
 
   async create(data: CreateUserBody) {

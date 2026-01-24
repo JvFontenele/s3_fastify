@@ -39,6 +39,8 @@ app.register(fastifySwagger, {
   transform: jsonSchemaTransform,
 });
 
+app.register(prismaPlugin);
+
 app.register(autoload, {
   dir: join(__dirname, 'modules'),
   routeParams: true,
@@ -54,7 +56,7 @@ app.register(ScalarApiReference, {
   routePrefix: '/docs',
 });
 
-app.register(prismaPlugin);
+
 
 app.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
   log.log('');

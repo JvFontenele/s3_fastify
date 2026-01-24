@@ -10,9 +10,13 @@ export class UserController extends BaseController<UserService> {
     return this.created(reply, user);
   };
 
-  getAllUsers = async (_request: FastifyRequest, reply: FastifyReply) => {
-    const users = await this.service.findAll();
-    return this.ok(reply, users);
+  getAllUsers = async (request: FastifyRequest, reply: FastifyReply) => {
+    const { page, limit, skip, take } = this.getPagination(request);
+    const { data, total } = await this.service.findAll({
+      skip,
+      take,
+    });
+    return this.paginated(reply, data, total, page, limit);
   };
 
   getUserById = async (request: FastifyRequest<{ Params: { id: number } }>, reply: FastifyReply) => {

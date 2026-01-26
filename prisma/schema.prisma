@@ -7,61 +7,89 @@ datasource db {
   provider = "postgresql"
 }
 
+enum ContractStatus {
+  ACTIVE
+  INACTIVE
+  FINISHED
+  CANCELED
+}
+
+model Person {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String?  @unique
+  cpfCnpj   String   @unique
+  type      String // PF ou PJ
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users     User[]
+  contracts Contract[]
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   username  String   @unique
-  email     String   @unique
   password  String
+  status    Boolean  @default(true)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  series Series[]
+  personId Int
+  person   Person @relation(fields: [personId], references: [id])
 }
 
-model Series {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String?
-  coverKey    String?
-  coverUrl    String?
-  createdAt   DateTime @default(now())
+model Contract {
+  id          Int            @id @default(autoincrement())
+  description String
+  startDate   DateTime
+  endDate     DateTime?
+  status      ContractStatus @default(ACTIVE)
+  notes       String?
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
+  personId Int
+  person   Person @relation(fields: [personId], references: [id])
 
-  chapters Chapter[]
+  agreementId Int?
+  agreement   Agreement? @relation(fields: [agreementId], references: [id])
+
+  files ContractFile[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model Chapter {
+model Agreement {
+  id              Int     @id @default(autoincrement())
+  name            String
+  discountRate    Decimal @db.Decimal(5, 2) // ex: 10.50%
+  agreementTypeId Int
+
+  agreementType AgreementType @relation(fields: [agreementTypeId], references: [id])
+  contracts     Contract[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AgreementType {
   id        Int      @id @default(autoincrement())
-  title     String
-  number    Int
+  name      String   @unique // Nicho: Saúde, Educação, etc
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  seriesId Int
-  series   Series @relation(fields: [seriesId], references: [id])
-
-  pages Page[]
-
-  @@unique([seriesId, number])
+  agreements Agreement[]
 }
 
-model Page {
-  id        Int      @id @default(autoincrement())
-  order     Int
-  type      FileType
-  fileKey   String
-  fileUrl   String
-  mimeType  String
-  size      Int
+model ContractFile {
+  id       Int    @id @default(autoincrement())
+  fileName String
+  fileUrl  String // URL do S3
+  mimeType String
+  size     Int
+
+  contractId Int
+  contract   Contract @relation(fields: [contractId], references: [id])
+
   createdAt DateTime @default(now())
-
-  chapterId Int
-  chapter   Chapter @relation(fields: [chapterId], references: [id])
-
-  @@unique([chapterId, order])
-}
-
-enum FileType {
-  IMAGE
-  PDF
 }

@@ -12,7 +12,7 @@ export default async function userRoutes(app: FastifyInstance) {
   const controller = new UserController(service);
 
   app.post(
-    '/users',
+    '/',
     {
       schema: {
         summary: 'Create a new user',
@@ -25,7 +25,7 @@ export default async function userRoutes(app: FastifyInstance) {
   );
 
   app.get(
-    '/users',
+    '/',
     {
       schema: {
         summary: 'Get all users',
@@ -38,7 +38,7 @@ export default async function userRoutes(app: FastifyInstance) {
   );
 
   app.get(
-    '/users/:id',
+    '/:id',
     {
       schema: {
         summary: 'Get a user by ID',
@@ -51,7 +51,7 @@ export default async function userRoutes(app: FastifyInstance) {
   );
 
   app.delete(
-    '/users/:id',
+    '/:id',
     {
       schema: {
         summary: 'Delete a user by ID',

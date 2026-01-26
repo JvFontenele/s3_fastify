@@ -54,6 +54,11 @@ app.addHook('onRoute', ({ method, path }) => {
 
 app.register(ScalarApiReference, {
   routePrefix: '/docs',
+  configuration:{
+    authentication:{
+      securitySchemes:{},
+    }
+  }
 });
 
 

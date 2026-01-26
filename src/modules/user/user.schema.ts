@@ -17,7 +17,7 @@ export const UserResponseSchema = z.object({
   id: z.number(),
   username: z.string(),
   email: z.string(),
-  person: z.object(PersonResponseSchema),
+  person: PersonResponseSchema,
 });
 
 export type CreateUserBody = z.infer<typeof CreateUserBodySchema>;

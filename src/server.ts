@@ -28,13 +28,6 @@ app.register(fastifyCors, {
   credentials: true,
 });
 
-app.register(prismaPlugin);
-
-app.register(autoload, {
-  dir: join(__dirname, 'modules'),
-  routeParams: true,
-});
-
 app.register(fastifySwagger, {
   openapi: {
     info: {
@@ -46,6 +39,13 @@ app.register(fastifySwagger, {
   transform: jsonSchemaTransform,
 });
 
+app.register(prismaPlugin);
+
+app.register(autoload, {
+  dir: join(__dirname, 'modules'),
+  routeParams: true,
+});
+
 app.addHook('onRoute', ({ method, path }) => {
   if (method === 'HEAD' || method === 'OPTIONS') return;
   if (path.includes('docs')) return;
@@ -54,12 +54,9 @@ app.addHook('onRoute', ({ method, path }) => {
 
 app.register(ScalarApiReference, {
   routePrefix: '/docs',
-  configuration: {
-    authentication: {},
-    showDeveloperTools: 'never',
-  },
 });
-app.after(() => {});
+
+
 
 app.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
   log.log('');

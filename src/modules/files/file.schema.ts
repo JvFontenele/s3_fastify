@@ -8,6 +8,8 @@ export const CreateFileInputSchema = z.object({
   personId: z.number(),
 });
 
+export const FileUploadSchema = z.any().describe('Arquivo a ser enviado')
+
 export const GetFileParamsSchema = z.object({
   personId: z.string().transform(Number),
 });
@@ -24,3 +26,4 @@ export const FileResponseSchema = z.object({
 export type CreateFileInput = z.infer<typeof CreateFileInputSchema>;
 export type GetFileParams = z.infer<typeof GetFileParamsSchema>;
 export type FileResponse = z.infer<typeof FileResponseSchema>;
+

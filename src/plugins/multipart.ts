@@ -1,10 +1,12 @@
 import fp from 'fastify-plugin';
 import multipart from '@fastify/multipart';
 
-export default fp(async (app) => {
+const multipartPlugin = fp(async (app) => {
   app.register(multipart, {
     limits: {
-      fileSize: 10 * 1024 * 1024, // 10MB
+      fileSize: 50 * 1024 * 1024, // 50MB
     },
   });
 });
+
+export { multipartPlugin };

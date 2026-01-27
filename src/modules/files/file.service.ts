@@ -8,7 +8,7 @@ export class FileService extends BaseService {
   private storage = new StorageService();
   async upload(data: CreateFileInput) {
     const existPerson = await this.prisma.person.findUnique({ where: { id: data.personId } });
-    if (existPerson) {
+    if (!existPerson) {
       throw new ConflictError('Person with this email already exists');
     }
 

@@ -14,6 +14,7 @@ import ck from 'chalk';
 import { join } from 'node:path';
 import { cookiePlugin } from './plugins/cookie';
 import { errorPlugin } from './plugins/error-handler';
+import {  multipartPlugin} from './plugins/multipart';
 // import { userRoutes } from "./modules/user/user.routes";
 
 // import { routes } from "@/routes";
@@ -56,6 +57,7 @@ app.register(fastifySwagger, {
 });
 
 app.register(prismaPlugin);
+app.register(multipartPlugin);
 app.register(cookiePlugin);
 app.register(jwtPlugin);
 app.register(errorPlugin);

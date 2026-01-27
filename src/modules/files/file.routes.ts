@@ -2,7 +2,7 @@ import { authHook } from '@/hooks/auth';
 import { FastifyInstance } from 'fastify';
 import { FileService } from './file.service';
 import { FileController } from './file.controller';
-import { FileResponseSchema } from './file.schema';
+import { FileResponseSchema, FileUploadSchema } from './file.schema';
 
 const tag = 'File';
 
@@ -15,11 +15,15 @@ export default async function fileRoutes(app: FastifyInstance) {
     '/',
     {
       schema: {
-        summary: 'Upload a file',
+        summary: 'Upload de arquivos',
         tags: [tag],
         security: [{ bearerAuth: [] }],
-         consumes: ['multipart/form-data'],
-        response: { 201: FileResponseSchema },
+        consumes: ['multipart/form-data'],
+        body: FileUploadSchema,
+
+        response: {
+          201: FileResponseSchema,
+        },
       },
     },
     controller.upload,

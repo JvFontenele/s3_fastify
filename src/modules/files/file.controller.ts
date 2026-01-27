@@ -1,7 +1,6 @@
 import { BaseController } from '@/shared/BaseController';
 import { FileService } from './file.service';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import {  GetFileParams } from './file.schema';
 import { BadRequestError, NotFoundError } from '@/shared/errors/http-error';
 
 export class FileController extends BaseController {
@@ -26,5 +25,15 @@ export class FileController extends BaseController {
     });
 
     return this.created(reply, saved);
+  };
+
+  findByPerson = async (request: FastifyRequest, reply: FastifyReply) => {
+    const files = await this.service.findFilesByPersonId(request.user.person.id);
+
+    if (!files) {
+      throw new NotFoundError('Files not found');
+    }
+
+    return files;
   };
 }

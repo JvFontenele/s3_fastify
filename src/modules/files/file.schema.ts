@@ -18,9 +18,6 @@ export const FileResponseSchema = z.object({
   id: z.number(),
   fileName: z.string(),
   fileUrl: z.string(),
-  mimeType: z.string(),
-  size: z.number(),
-  personId: z.number(),
 });
 
 export type CreateFileInput = z.infer<typeof CreateFileInputSchema>;

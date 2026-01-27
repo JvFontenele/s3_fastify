@@ -28,4 +28,19 @@ export default async function fileRoutes(app: FastifyInstance) {
     },
     controller.upload,
   );
+
+  app.get(
+    '/',
+    {
+      schema: {
+        summary: 'Get all files by person',
+        tags: [tag],
+        security: [{ bearerAuth: [] }],
+        response: {
+          200: FileResponseSchema.array(),
+        },
+      },
+    },
+    controller.findByPerson,
+  );
 }

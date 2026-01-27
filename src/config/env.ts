@@ -4,4 +4,5 @@ export class Env {
   static PORT = process.env.PORT ? parseInt(process.env.PORT) : 8080;
   static JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key";
   static DATABASE_URL = process.env.DATABASE_URL || "";
+  static COOKIE_SECRET = process.env.COOKIE_SECRET || "your_cookie_secret_key";
 }

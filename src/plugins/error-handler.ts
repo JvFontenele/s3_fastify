@@ -4,7 +4,7 @@ import { Prisma } from '../../prisma/generated/client';
 import { AppError } from '@/shared/errors/AppError';
 import { prismaErrorToHttp } from '@/shared/errors/prisma-error';
 
-export default fp(async (app) => {
+const errorPlugin =  fp(async (app) => {
   app.setErrorHandler((error, request, reply) => {
     // 🔍 Log sempre
     request.log.error(error);
@@ -52,3 +52,5 @@ export default fp(async (app) => {
     });
   });
 });
+
+export { errorPlugin };

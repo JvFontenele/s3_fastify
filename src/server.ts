@@ -12,6 +12,8 @@ import { jwtPlugin } from './plugins/jwt';
 import log from 'consola';
 import ck from 'chalk';
 import { join } from 'node:path';
+import { cookiePlugin } from './plugins/cookie';
+import { errorPlugin } from './plugins/error-handler';
 // import { userRoutes } from "./modules/user/user.routes";
 
 // import { routes } from "@/routes";
@@ -54,7 +56,9 @@ app.register(fastifySwagger, {
 });
 
 app.register(prismaPlugin);
+app.register(cookiePlugin);
 app.register(jwtPlugin);
+app.register(errorPlugin);
 
 app.register(autoload, {
   dir: join(__dirname, 'modules'),

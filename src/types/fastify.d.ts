@@ -5,15 +5,26 @@ declare module 'fastify' {
   interface FastifyInstance {
     prisma: PrismaClient;
   }
+}
 
-  interface FastifyRequest {
-    user: {
+declare module '@fastify/jwt' {
+  interface FastifyJWT {
+    payload: {
       sub: string;
       person: {
+        id: number;
         name: string;
         email: string;
         cpfCnpj: string;
+      };
+    };
+    user: {
+      sub: string;
+      person: {
         id: number;
+        name: string;
+        email: string;
+        cpfCnpj: string;
       };
     };
   }

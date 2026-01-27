@@ -20,6 +20,7 @@ export class UserController extends BaseController {
       skip,
       take,
     });
+
     return this.paginated(reply, data, total, page, limit);
   };
 

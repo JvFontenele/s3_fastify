@@ -6,4 +6,11 @@ export class Env {
   static DATABASE_URL = process.env.DATABASE_URL || "";
   static COOKIE_SECRET = process.env.COOKIE_SECRET || "your_cookie_secret_key";
   static EXPIRE_TOKEN_TIME = process.env.EXPIRE_TIME || "3h";
+
+  // S3 Configs
+  static S3_ENDPOINT = process.env.S3_ENDPOINT || "http://localhost:9000";
+  static S3_REGION = process.env.S3_REGION || "us-east-1";
+  static S3_ACCESS_KEY = process.env.S3_ACCESS_KEY || "minioadmin";
+  static S3_SECRET_KEY = process.env.S3_SECRET_KEY || "minioadmin";
+  static S3_BUCKET_NAME = process.env.S3_BUCKET_NAME || "test";
 }

@@ -23,8 +23,8 @@ model Person {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  users     User[]
-  contracts Contract[]
+  users User[]
+  files File[]
 }
 
 model User {
@@ -52,57 +52,17 @@ model RefreshToken {
   @@index([userId])
 }
 
-model Contract {
-  id          Int            @id @default(autoincrement())
-  description String
-  startDate   DateTime
-  endDate     DateTime?
-  status      ContractStatus @default(ACTIVE)
-  notes       String?
+model File {
+  id       Int    @id @default(autoincrement())
+  fileName String
+  key      String   @unique
+  fileUrl  String
+  mimeType String
+  size     Int
 
   personId Int
   person   Person @relation(fields: [personId], references: [id])
 
-  agreementId Int?
-  agreement   Agreement? @relation(fields: [agreementId], references: [id])
-
-  files ContractFile[]
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-model Agreement {
-  id              Int     @id @default(autoincrement())
-  name            String
-  discountRate    Decimal @db.Decimal(5, 2) // ex: 10.50%
-  agreementTypeId Int
-
-  agreementType AgreementType @relation(fields: [agreementTypeId], references: [id])
-  contracts     Contract[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model AgreementType {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique // Nicho: Saúde, Educação, etc
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  agreements Agreement[]
-}
-
-model ContractFile {
-  id       Int    @id @default(autoincrement())
-  fileName String
-  fileUrl  String // URL do S3
-  mimeType String
-  size     Int
-
-  contractId Int
-  contract   Contract @relation(fields: [contractId], references: [id])
-
-  createdAt DateTime @default(now())
 }

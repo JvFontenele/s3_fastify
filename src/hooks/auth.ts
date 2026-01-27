@@ -10,7 +10,9 @@ export async function authHook(request: FastifyRequest, reply: FastifyReply) {
 
     // const token = auth.replace('Bearer ', '');
 
+    
     await request.jwtVerify();
+    
   } catch {
     throw new UnauthorizedError('Unauthorized');
   }

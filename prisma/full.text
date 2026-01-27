@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../prisma/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ContractStatus {
+  ACTIVE
+  INACTIVE
+  FINISHED
+  CANCELED
+}
+
+model Person {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String?  @unique
+  cpfCnpj   String   @unique
+  type      String // PF ou PJ
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users     User[]
+  contracts Contract[]
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  personId      Int
+  person        Person         @relation(fields: [personId], references: [id])
+  refreshTokens RefreshToken[]
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  revoked   Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Contract {
+  id          Int            @id @default(autoincrement())
+  description String
+  startDate   DateTime
+  endDate     DateTime?
+  status      ContractStatus @default(ACTIVE)
+  notes       String?
+
+  personId Int
+  person   Person @relation(fields: [personId], references: [id])
+
+  agreementId Int?
+  agreement   Agreement? @relation(fields: [agreementId], references: [id])
+
+  files ContractFile[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Agreement {
+  id              Int     @id @default(autoincrement())
+  name            String
+  discountRate    Decimal @db.Decimal(5, 2) // ex: 10.50%
+  agreementTypeId Int
+
+  agreementType AgreementType @relation(fields: [agreementTypeId], references: [id])
+  contracts     Contract[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AgreementType {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique // Nicho: Saúde, Educação, etc
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  agreements Agreement[]
+}
+
+model ContractFile {
+  id       Int    @id @default(autoincrement())
+  fileName String
+  fileUrl  String // URL do S3
+  mimeType String
+  size     Int
+
+  contractId Int
+  contract   Contract @relation(fields: [contractId], references: [id])
+
+  createdAt DateTime @default(now())
+}

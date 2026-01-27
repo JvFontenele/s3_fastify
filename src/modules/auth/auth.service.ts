@@ -4,6 +4,7 @@ import { LoginAuthBody } from './auth.schema';
 import { verifyHash } from '@/utils/hash';
 import { randomUUID } from 'crypto';
 import { UnauthorizedError } from '@/shared/errors/http-error';
+import { Env } from '@/config/env';
 
 export class AuthService {
   constructor(private prisma: PrismaClient) {}
@@ -25,7 +26,7 @@ export class AuthService {
       {
         sign: {
           sub: user.id.toString(),
-          expiresIn: '15m',
+          expiresIn: Env.EXPIRE_TOKEN_TIME,
         },
       },
     );
@@ -75,7 +76,7 @@ export class AuthService {
       {
         sign: {
           sub: user.id.toString(),
-          expiresIn: '15m',
+          expiresIn: Env.EXPIRE_TOKEN_TIME,
         },
       },
     );

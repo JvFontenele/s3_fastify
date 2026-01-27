@@ -16,7 +16,6 @@ export class UserController extends BaseController {
 
   getAllUsers = async (request: FastifyRequest, reply: FastifyReply) => {
     const { page, limit, skip, take } = this.getPagination(request);
-    console.log(request);
     const { data, total } = await this.userService.findAll({
       skip,
       take,

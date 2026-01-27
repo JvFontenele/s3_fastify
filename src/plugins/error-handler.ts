@@ -3,24 +3,20 @@ import { ZodError } from 'zod';
 import { Prisma } from '../../prisma/generated/client';
 import { AppError } from '@/shared/errors/AppError';
 import { prismaErrorToHttp } from '@/shared/errors/prisma-error';
+import consola from 'consola';
+import type { FastifyError } from 'fastify';
 
-const errorPlugin =  fp(async (app) => {
-  app.setErrorHandler((error, request, reply) => {
-    // 🔍 Log sempre
+const errorPlugin = fp(async (app) => {
+  app.setErrorHandler((error: FastifyError, request, reply) => {
+    consola.error(error);
     request.log.error(error);
 
-    /**
-     * 🔴 Erros de domínio
-     */
     if (error instanceof AppError) {
       return reply.status(error.statusCode).send({
         message: error.message,
       });
     }
 
-    /**
-     * 🟠 Validação Zod
-     */
     if (error instanceof ZodError) {
       return reply.status(422).send({
         message: 'Validation error',
@@ -32,9 +28,19 @@ const errorPlugin =  fp(async (app) => {
       });
     }
 
-    /**
-     * 🔵 Prisma
-     */
+    if (error?.code && error.code === 'FST_ERR_VALIDATION' && error.validation) {
+      return reply.status(422).send({
+        message: 'Validation error',
+        code: 'VALIDATION_ERROR',
+        errors: error.validation.map((v: any) => ({
+          field: v.instancePath
+            ? v.instancePath.replace('/', '').replaceAll('/', '.')
+            : (v.params?.missingProperty ?? null),
+          message: v.message,
+        })),
+      });
+    }
+
     if (error instanceof Prisma.PrismaClientKnownRequestError || error instanceof Prisma.PrismaClientValidationError) {
       const httpError = prismaErrorToHttp(error);
 
@@ -44,9 +50,6 @@ const errorPlugin =  fp(async (app) => {
       });
     }
 
-    /**
-     * 🟣 Fallback
-     */
     return reply.status(500).send({
       message: 'Internal server error',
     });

@@ -4,6 +4,7 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { CreateUserBodySchema, GetUserParamsSchema, UserResponseSchema } from './user.schema';
 import { PaginationQuerySchema, PaginatedResponseSchema } from '@/schemas/pagination.schema';
+import { authHook } from '@/hooks/auth';
 
 const tag = 'User';
 
@@ -11,12 +12,15 @@ export default async function userRoutes(app: FastifyInstance) {
   const service = new UserService(app.prisma);
   const controller = new UserController(service);
 
+  app.addHook('preHandler', authHook);
+  
   app.post(
     '/',
     {
       schema: {
         summary: 'Create a new user',
         tags: [tag],
+        security: [{ bearerAuth: [] }],
         body: CreateUserBodySchema,
         response: { 201: UserResponseSchema },
       },
@@ -30,6 +34,7 @@ export default async function userRoutes(app: FastifyInstance) {
       schema: {
         summary: 'Get all users',
         tags: [tag],
+        security: [{ bearerAuth: [] }],
         querystring: PaginationQuerySchema,
         response: { 200: PaginatedResponseSchema(UserResponseSchema.array()) },
       },
@@ -43,6 +48,7 @@ export default async function userRoutes(app: FastifyInstance) {
       schema: {
         summary: 'Get a user by ID',
         tags: [tag],
+        security: [{ bearerAuth: [] }],
         params: GetUserParamsSchema,
         response: { 200: UserResponseSchema },
       },
@@ -56,6 +62,7 @@ export default async function userRoutes(app: FastifyInstance) {
       schema: {
         summary: 'Delete a user by ID',
         tags: [tag],
+        security: [{ bearerAuth: [] }],
         params: GetUserParamsSchema,
         response: {},
       },

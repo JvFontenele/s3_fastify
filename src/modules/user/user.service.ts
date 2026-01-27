@@ -2,6 +2,7 @@
 import { BaseService } from '@/shared/BaseService';
 import { CreateUserBody } from './user.schema';
 import { ConflictError, NotFoundError } from '@/shared/errors/http-error';
+import { hashString } from '@/utils/hash';
 
 export class UserService extends BaseService {
   async findAll({ skip, take }: { skip: number; take: number }) {
@@ -20,6 +21,12 @@ export class UserService extends BaseService {
   }
 
   async create(data: CreateUserBody) {
+    const person = await this.prisma.person.findUnique({ where: { id: data.personId } });
+
+    if (!person) {
+      throw new NotFoundError('Person not found');
+    }
+
     const existeUser = await this.prisma.user.findMany({
       where: { personId: data.personId, status: true },
     });
@@ -28,7 +35,16 @@ export class UserService extends BaseService {
       throw new ConflictError('User already exists for this person');
     }
 
-    return this.prisma.user.create({ data });
+    const newPassword = await hashString(data.password);
+
+    return this.prisma.user.create({
+      data: {
+        username: person?.email!,
+        password: newPassword,
+        status: true,
+        personId: data.personId,
+      },
+    });
   }
 
   async findById(id: number) {

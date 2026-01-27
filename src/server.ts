@@ -7,6 +7,7 @@ import autoload from '@fastify/autoload';
 import ScalarApiReference from '@scalar/fastify-api-reference';
 
 import { prismaPlugin } from './plugins/prisma';
+import { jwtPlugin } from './plugins/jwt';
 
 import log from 'consola';
 import ck from 'chalk';
@@ -32,14 +33,28 @@ app.register(fastifySwagger, {
   openapi: {
     info: {
       title: 'Api de distribuição de Arquivos',
-      description: 'API de distribuição de arquivos para o S3',
       version: '1.0.0',
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
   transform: jsonSchemaTransform,
 });
 
 app.register(prismaPlugin);
+app.register(jwtPlugin);
 
 app.register(autoload, {
   dir: join(__dirname, 'modules'),
@@ -54,11 +69,6 @@ app.addHook('onRoute', ({ method, path }) => {
 
 app.register(ScalarApiReference, {
   routePrefix: '/docs',
-  configuration: {
-    authentication: {
-      securitySchemes: {},
-    },
-  },
 });
 
 app

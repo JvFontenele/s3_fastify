@@ -3,9 +3,7 @@ import { z } from 'zod';
 import { PersonResponseSchema } from '../person/person.schema';
 
 export const CreateUserBodySchema = z.object({
-  username: z.string().min(1),
   password: z.string().min(6),
-  status: z.boolean().default(true),
   personId: z.number(),
 });
 

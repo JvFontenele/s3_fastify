@@ -54,23 +54,27 @@ app.addHook('onRoute', ({ method, path }) => {
 
 app.register(ScalarApiReference, {
   routePrefix: '/docs',
-  configuration:{
-    authentication:{
-      securitySchemes:{},
-    }
-  }
+  configuration: {
+    authentication: {
+      securitySchemes: {},
+    },
+  },
 });
 
-
-
-app.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
-  log.log('');
-  log.log('');
-  log.success(ck.bold.blue('======================================='));
-  log.success(ck.bold.blue('      File Distribution API'));
-  log.success(ck.bold.blue('======================================='));
-  log.log('');
-  log.log('');
-  log.success(ck.bold.green('Server running at ' + ck.underline.blue('http://localhost:3333')));
-  log.success(ck.bold.green('API docs at' + ck.underline.blue(' http://localhost:3333/docs')));
-});
+app
+  .listen({ port: 3333, host: '0.0.0.0' })
+  .then(() => {
+    log.log('');
+    log.log('');
+    log.success(ck.bold.blue('======================================='));
+    log.success(ck.bold.blue('      File Distribution API'));
+    log.success(ck.bold.blue('======================================='));
+    log.log('');
+    log.log('');
+    log.success(ck.bold.green('Server running at ' + ck.underline.blue('http://localhost:3333')));
+    log.success(ck.bold.green('API docs at' + ck.underline.blue(' http://localhost:3333/docs')));
+  })
+  .catch((err) => {
+    log.error(err);
+    process.exit(1);
+  });

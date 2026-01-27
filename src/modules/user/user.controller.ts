@@ -4,15 +4,19 @@ import { BaseController } from '@/shared/BaseController';
 import { UserService } from './user.service';
 import type { CreateUserBody } from './user.schema';
 
-export class UserController extends BaseController<UserService> {
+export class UserController extends BaseController {
+  constructor(private readonly userService: UserService) {
+    super();
+  }
+
   postUser = async (request: FastifyRequest<{ Body: CreateUserBody }>, reply: FastifyReply) => {
-    const user = await this.service.create(request.body);
+    const user = await this.userService.create(request.body);
     return this.created(reply, user);
   };
 
   getAllUsers = async (request: FastifyRequest, reply: FastifyReply) => {
     const { page, limit, skip, take } = this.getPagination(request);
-    const { data, total } = await this.service.findAll({
+    const { data, total } = await this.userService.findAll({
       skip,
       take,
     });
@@ -20,12 +24,12 @@ export class UserController extends BaseController<UserService> {
   };
 
   getUserById = async (request: FastifyRequest<{ Params: { id: number } }>, reply: FastifyReply) => {
-    const user = await this.service.findById(request.params.id);
+    const user = await this.userService.findById(request.params.id);
     return this.ok(reply, user);
   };
 
   deleteUser = async (request: FastifyRequest<{ Params: { id: number } }>, reply: FastifyReply) => {
-    const user = await this.service.delete(request.params.id);
+    const user = await this.userService.delete(request.params.id);
     return this.noContent(reply);
   };
 }

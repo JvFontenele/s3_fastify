@@ -1,6 +1,7 @@
 // src/modules/user/user.service.ts
 import { BaseService } from '@/shared/BaseService';
 import { CreatePersonBody } from './person.schema';
+import { ConflictError, NotFoundError } from '@/shared/errors/http-error';
 
 export class PersonService extends BaseService {
   async findAll({ skip, take }: { skip: number; take: number }) {
@@ -9,6 +10,11 @@ export class PersonService extends BaseService {
   }
 
   async create(data: CreatePersonBody) {
+    const existPerson = await this.prisma.person.findUnique({ where: { email: data.email } });
+    if (existPerson) {
+      throw new ConflictError('Person with this email already exists');
+    }
+
     return this.prisma.person.create({ data });
   }
 
@@ -19,7 +25,7 @@ export class PersonService extends BaseService {
   async delete(id: number) {
     const person = await this.prisma.person.findUnique({ where: { id } });
     if (!person) {
-      throw new Error('Person not found');
+      throw new NotFoundError('Person not found');
     }
     return this.prisma.person.delete({ where: { id } });
   }

@@ -4,7 +4,10 @@ import { BaseController } from '@/shared/BaseController';
 import { PersonService } from './person.service';
 import { CreatePersonBody } from './person.schema';
 
-export class PersonController extends BaseController<PersonService> {
+export class PersonController extends BaseController {
+  constructor(private readonly service: PersonService) {
+    super();
+  }
   postPerson = async (request: FastifyRequest<{ Body: CreatePersonBody }>, reply: FastifyReply) => {
     const person = await this.service.create(request.body);
     return this.created(reply, person);

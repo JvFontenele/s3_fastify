@@ -1,6 +1,4 @@
-import { PrismaClientKnownRequestError } from './../../../prisma/generated/internal/prismaNamespace';
-
-
+import { Prisma } from '../../../prisma/generated/client';
 export interface HttpError {
   statusCode: number;
   message: string;
@@ -8,14 +6,19 @@ export interface HttpError {
 }
 
 export function prismaErrorToHttp(error: unknown): HttpError {
-  if (error instanceof PrismaClientKnownRequestError) {
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
     switch (error.code) {
-      case 'P2002':
+      case 'P2002': {
+        const fields = Array.isArray(error.meta?.target)
+          ? error.meta.target.join(', ')
+          : 'campo';
+
         return {
           statusCode: 409,
-          message: `Já existe um registro com este ${error.meta?.target}`,
+          message: `Já existe um registro com este ${fields}`,
           code: error.code,
         };
+      }
 
       case 'P2025':
         return {

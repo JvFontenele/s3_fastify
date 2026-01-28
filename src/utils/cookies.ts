@@ -13,3 +13,12 @@ export function setCookie(reply: FastifyReply, name: string, value: string, opti
 
   reply.setCookie(name, value, defaultOptions);
 }
+
+export function clearCookie(reply: FastifyReply, name: string, options: CookieSerializeOptions = {}) {
+  const defaultOptions: CookieSerializeOptions = {
+    path: '/',
+    ...options,
+  };
+
+  reply.clearCookie(name, defaultOptions);
+}

@@ -3,7 +3,7 @@ import { BaseController } from '@/shared/BaseController';
 import { AuthService } from './auth.service';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { UnauthorizedError } from '@/shared/errors/http-error';
-import { setCookie } from '@/utils/cookies';
+import { clearCookie, setCookie } from '@/utils/cookies';
 
 export class AuthController extends BaseController {
   constructor(private readonly authService: AuthService) {
@@ -14,7 +14,7 @@ export class AuthController extends BaseController {
     const { accessToken, refreshToken, user } = await this.authService.login(request.body, reply);
 
     setCookie(reply, 'refreshToken', refreshToken);
-    setCookie(reply, 'token', accessToken);
+    setCookie(reply, 'accessToken', accessToken);
 
     return this.ok(reply, {
       accessToken,
@@ -32,6 +32,8 @@ export class AuthController extends BaseController {
 
     const { accessToken, user } = await this.authService.refreshToken(token, reply);
 
+    setCookie(reply, 'accessToken', accessToken);
+
     return this.ok(reply, { accessToken, user });
   };
 
@@ -44,9 +46,8 @@ export class AuthController extends BaseController {
 
     await this.authService.logout(token, reply);
 
-    reply.clearCookie('refreshToken', {
-      path: '/auth/refresh',
-    });
+    clearCookie(reply, 'refreshToken');
+    clearCookie(reply, 'accessToken');
 
     this.noContent(reply);
   };

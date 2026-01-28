@@ -27,6 +27,7 @@ export class AuthService {
           ...user.person,
           email: user.person.email ?? user.username,
         },
+        id: user.id,
         sub: user.id.toString(),
       },
       {
@@ -83,6 +84,7 @@ export class AuthService {
           ...user.person,
           email: user.person.email ?? user.username,
         },
+        id: user.id,
         sub: user.id.toString(),
       },
       {

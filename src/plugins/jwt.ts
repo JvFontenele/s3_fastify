@@ -6,6 +6,11 @@ import { Env } from '@/config/env';
 const jwtPlugin = fp(async (fastify) => {
   fastify.register(fastifyJwt, {
     secret: Env.JWT_SECRET,
+    cookie: {
+      cookieName: 'accessToken',
+      signed: false,
+    },
+
   });
 });
 

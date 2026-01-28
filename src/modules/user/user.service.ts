@@ -48,7 +48,12 @@ export class UserService extends BaseService {
   }
 
   async findById(id: number) {
-    return this.prisma.user.findUnique({ where: { id } });
+    return this.prisma.user.findUnique({
+      where: { id },
+      include: {
+        person: true,
+      },
+    });
   }
 
   async delete(id: number) {

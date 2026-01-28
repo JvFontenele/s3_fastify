@@ -56,6 +56,19 @@ export default async function userRoutes(app: FastifyInstance) {
     controller.getUserById,
   );
 
+    app.get(
+    '/me',
+    {
+      schema: {
+        summary: 'Get user logged in',
+        tags: [tag],
+        security: [{ bearerAuth: [] }],
+        response: { 200: UserResponseSchema },
+      },
+    },
+    controller.getUserLoggedIn,
+  );
+
   app.delete(
     '/:id',
     {

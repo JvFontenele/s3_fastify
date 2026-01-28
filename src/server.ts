@@ -54,9 +54,9 @@ app.register(fastifySwagger, {
   transform: jsonSchemaTransform,
 });
 
+app.register(cookiePlugin);
 app.register(prismaPlugin);
 app.register(multipartPlugin);
-app.register(cookiePlugin);
 app.register(jwtPlugin);
 app.register(errorPlugin);
 

@@ -29,6 +29,11 @@ export class UserController extends BaseController {
     return this.ok(reply, user);
   };
 
+  getUserLoggedIn = async (request: FastifyRequest, reply: FastifyReply) => {
+    const user = await this.userService.findById(request.user.id);
+    return this.ok(reply, user);
+  };
+
   deleteUser = async (request: FastifyRequest<{ Params: { id: number } }>, reply: FastifyReply) => {
     const user = await this.userService.delete(request.params.id);
     return this.noContent(reply);

@@ -3,11 +3,13 @@ import { ZodError } from 'zod';
 import { Prisma } from '../../prisma/generated/client';
 import { AppError } from '@/shared/errors/AppError';
 import { prismaErrorToHttp } from '@/shared/errors/prisma-error';
-import consola from 'consola';
 import type { FastifyError } from 'fastify';
+import consola from 'consola';
+import ck from 'chalk';
 
 const errorPlugin = fp(async (app) => {
   app.setErrorHandler((error: FastifyError, request, reply) => {
+    consola.error(ck.red(String(error.code)), error.message);
     consola.error(error);
     request.log.error(error);
 
@@ -38,6 +40,20 @@ const errorPlugin = fp(async (app) => {
             : (v.params?.missingProperty ?? null),
           message: v.message,
         })),
+      });
+    }
+    
+    if (error?.code && error.code === 'FST_INVALID_MULTIPART_CONTENT_TYPE') {
+      return reply.status(422).send({
+        message: 'The request is not multipart',
+        code: 'VALIDATION_ERROR',
+      });
+    }
+
+    if (error?.code && error.code === 'FST_REQ_FILE_TOO_LARGE') {
+      return reply.status(413).send({
+        message: 'Payload Too Large',
+        code: 'FILE_TOO_LARGE',
       });
     }
 

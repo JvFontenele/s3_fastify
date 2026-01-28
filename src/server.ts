@@ -9,15 +9,13 @@ import ScalarApiReference from '@scalar/fastify-api-reference';
 import { prismaPlugin } from './plugins/prisma';
 import { jwtPlugin } from './plugins/jwt';
 
-import log from 'consola';
-import ck from 'chalk';
 import { join } from 'node:path';
 import { cookiePlugin } from './plugins/cookie';
 import { errorPlugin } from './plugins/error-handler';
 import {  multipartPlugin} from './plugins/multipart';
-// import { userRoutes } from "./modules/user/user.routes";
 
-// import { routes } from "@/routes";
+import log from 'consola';
+import ck from 'chalk';
 
 const app = fastify({
   logger: false,

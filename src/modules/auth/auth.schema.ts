@@ -8,8 +8,8 @@ export const LoginAuthBodySchema = z.object({
 });
 
 export const AuthResponseSchema = z.object({
-  accessToken: z.string(),
-  refreshToken: z.string().optional(),
+  // accessToken: z.string(),
+  // refreshToken: z.string().optional(),
   user: UserResponseSchema,
 });
 

@@ -3,6 +3,7 @@ import { BaseController } from '@/shared/BaseController';
 import { AuthService } from './auth.service';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { UnauthorizedError } from '@/shared/errors/http-error';
+import { setCookie } from '@/utils/cookies';
 
 export class AuthController extends BaseController {
   constructor(private readonly authService: AuthService) {
@@ -12,13 +13,8 @@ export class AuthController extends BaseController {
   login = async (request: FastifyRequest<{ Body: LoginAuthBody }>, reply: FastifyReply) => {
     const { accessToken, refreshToken, user } = await this.authService.login(request.body, reply);
 
-    reply.setCookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'strict',
-      path: '/auth/refresh',
-      maxAge: 60 * 60 * 24 * 7,
-    });
+    setCookie(reply, 'refreshToken', refreshToken);
+    setCookie(reply, 'token', accessToken);
 
     return this.ok(reply, {
       accessToken,

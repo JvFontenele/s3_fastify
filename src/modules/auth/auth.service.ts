@@ -22,7 +22,13 @@ export class AuthService {
     }
 
     const accessToken = await reply.jwtSign(
-      { person: user.person },
+      {
+        person: {
+          ...user.person,
+          email: user.person.email ?? user.username,
+        },
+        sub: user.id.toString(),
+      },
       {
         sign: {
           sub: user.id.toString(),
@@ -72,7 +78,13 @@ export class AuthService {
     }
 
     const accessToken = await reply.jwtSign(
-      { person: user.person },
+      {
+        person: {
+          ...user.person,
+          email: user.person.email ?? user.username,
+        },
+        sub: user.id.toString(),
+      },
       {
         sign: {
           sub: user.id.toString(),

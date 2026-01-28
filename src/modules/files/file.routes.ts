@@ -3,7 +3,7 @@ import { authHook } from '@/hooks/auth';
 import { FastifyInstance } from 'fastify';
 import { FileService } from './file.service';
 import { FileController } from './file.controller';
-import { FileResponseSchema, FileUploadSchema } from './file.schema';
+import { FileResponseSchema, FileUploadSchema, GetFileParamsSchema } from './file.schema';
 
 const tag = 'File';
 
@@ -30,6 +30,24 @@ export default async function fileRoutes(app: FastifyInstance) {
     controller.upload,
   );
 
+  app.post(
+    '/stream',
+    {
+      schema: {
+        summary: 'Upload de arquivos com stream',
+        tags: [tag],
+        security: [{ bearerAuth: [] }],
+        consumes: ['multipart/form-data'],
+        body: FileUploadSchema,
+
+        response: {
+          201: FileResponseSchema,
+        },
+      },
+    },
+    controller.uploadStream,
+  );
+
   app.get(
     '/',
     {
@@ -44,5 +62,19 @@ export default async function fileRoutes(app: FastifyInstance) {
       },
     },
     controller.findByPerson,
+  );
+
+  app.delete(
+    '/:id',
+    {
+      schema: {
+        summary: 'Delete a file by ID',
+        tags: [tag],
+        security: [{ bearerAuth: [] }],
+        params: GetFileParamsSchema,
+        response: {},
+      },
+    },
+    controller.delete,
   );
 }

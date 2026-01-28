@@ -4,7 +4,7 @@ import multipart from '@fastify/multipart';
 const multipartPlugin = fp(async (app) => {
   app.register(multipart, {
     limits: {
-      fileSize: 50 * 1024 * 1024, // 50MB
+        fileSize: 10 * 1024 * 1024 * 1024,  // 10GB
     },
   });
 });

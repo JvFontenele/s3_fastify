@@ -27,6 +27,24 @@ export class FileController extends BaseController {
     return this.created(reply, saved);
   };
 
+  uploadStream = async (request: FastifyRequest, reply: FastifyReply) => {
+    const file = await request.file();
+
+    if (!file) {
+      return new BadRequestError('File is required');
+    }
+
+    const saved = await this.service.uploadStream({
+      stream: file.file,
+      originalName: file.filename,
+      mimeType: file.mimetype,
+      size: file.file.bytesRead,
+      personId: Number(request.user.person.id),
+    });
+
+    return this.created(reply, saved);
+  };
+
   findByPerson = async (request: FastifyRequest, reply: FastifyReply) => {
     const { page, limit, skip, take } = this.getPagination(request);
     const { data, total } = await this.service.findFilesByPersonId(request.user.person.id, {
@@ -35,5 +53,13 @@ export class FileController extends BaseController {
     });
 
     return this.paginated(reply, data, total, page, limit);
+  };
+
+  delete = async (request: FastifyRequest<{ Params: { id: number } }>, reply: FastifyReply) => {
+    const { id } = request.params;
+
+    await this.service.delete(id, request.user.person.id);
+
+    return this.noContent(reply);
   };
 }

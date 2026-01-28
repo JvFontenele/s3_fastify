@@ -1,3 +1,4 @@
+import { PaginatedResponseSchema, PaginationQuerySchema } from '@/schemas/pagination.schema';
 import { authHook } from '@/hooks/auth';
 import { FastifyInstance } from 'fastify';
 import { FileService } from './file.service';
@@ -36,8 +37,9 @@ export default async function fileRoutes(app: FastifyInstance) {
         summary: 'Get all files by person',
         tags: [tag],
         security: [{ bearerAuth: [] }],
+        querystring: PaginationQuerySchema,
         response: {
-          200: FileResponseSchema.array(),
+          200: PaginatedResponseSchema(FileResponseSchema.array()),
         },
       },
     },

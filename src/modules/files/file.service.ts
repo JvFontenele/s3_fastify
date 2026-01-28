@@ -44,7 +44,12 @@ export class FileService extends BaseService {
     });
   }
 
-  async findFilesByPersonId(personId: number) {
-    return this.prisma.file.findMany({ where: { personId } });
+  async findFilesByPersonId(personId: number, { skip, take }: { skip: number; take: number }) {
+    const [data, total] = await Promise.all([
+      this.prisma.file.findMany({ skip, take, where: { personId } }),
+      this.prisma.file.count({ where: { personId } }),
+    ]);
+
+    return { data, total };
   }
 }

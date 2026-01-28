@@ -28,12 +28,12 @@ export class FileController extends BaseController {
   };
 
   findByPerson = async (request: FastifyRequest, reply: FastifyReply) => {
-    const files = await this.service.findFilesByPersonId(request.user.person.id);
+    const { page, limit, skip, take } = this.getPagination(request);
+    const { data, total } = await this.service.findFilesByPersonId(request.user.person.id, {
+      skip,
+      take,
+    });
 
-    if (!files) {
-      throw new NotFoundError('Files not found');
-    }
-
-    return files;
+    return this.paginated(reply, data, total, page, limit);
   };
 }

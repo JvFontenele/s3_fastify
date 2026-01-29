@@ -12,7 +12,7 @@ export default async function userRoutes(app: FastifyInstance) {
   const service = new UserService(app.prisma);
   const controller = new UserController(service);
 
-  app.addHook('preHandler', authHook);
+
   
   app.post(
     '/',
@@ -27,7 +27,7 @@ export default async function userRoutes(app: FastifyInstance) {
     },
     controller.postUser,
   );
-
+  app.addHook('preHandler', authHook);
   app.get(
     '/',
     {

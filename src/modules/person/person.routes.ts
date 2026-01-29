@@ -12,7 +12,7 @@ export default async function personRoutes(app: FastifyInstance) {
   const service = new PersonService(app.prisma);
   const controller = new PersonController(service);
 
-  app.addHook('preHandler', authHook);
+
 
   app.post(
     '/',
@@ -27,7 +27,7 @@ export default async function personRoutes(app: FastifyInstance) {
     },
     controller.postPerson,
   );
-
+  app.addHook('preHandler', authHook);
   app.get(
     '/',
     {

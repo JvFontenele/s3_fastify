@@ -13,4 +13,6 @@ export class Env {
   static S3_ACCESS_KEY = process.env.S3_ACCESS_KEY || "minioadmin";
   static S3_SECRET_KEY = process.env.S3_SECRET_KEY || "minioadmin";
   static S3_BUCKET_NAME = process.env.S3_BUCKET_NAME || "uploads";
+
+  static S3_URL_FILE = process.env.S3_URL_FILE || "http://localhost:9000";
 }

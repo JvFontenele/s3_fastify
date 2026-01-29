@@ -26,7 +26,7 @@ export const FileResponseSchema = z.object({
   id: z.number(),
   fileName: z.string(),
   fileUrl: z.string().transform((data) => {
-    return `${Env.S3_ENDPOINT}${data}`;
+    return `${Env.S3_URL_FILE}${data}`;
   }),
   mimeType: z.string(),
   size: z.bigint().transform((data) => {

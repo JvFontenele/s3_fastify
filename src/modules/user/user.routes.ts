@@ -20,14 +20,16 @@ export default async function userRoutes(app: FastifyInstance) {
       schema: {
         summary: 'Create a new user',
         tags: [tag],
-        security: [{ bearerAuth: [] }],
+        // security: [{ bearerAuth: [] }],
         body: CreateUserBodySchema,
         response: { 201: UserResponseSchema },
       },
     },
     controller.postUser,
   );
+
   app.addHook('preHandler', authHook);
+  
   app.get(
     '/',
     {

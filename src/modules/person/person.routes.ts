@@ -20,7 +20,7 @@ export default async function personRoutes(app: FastifyInstance) {
       schema: {
         summary: 'Create a new person',
         tags: [tag],
-        security: [{ bearerAuth: [] }],
+        // security: [{ bearerAuth: [] }],
         body: CreatePersonBodySchema,
         response: { 201: PersonResponseSchema },
       },

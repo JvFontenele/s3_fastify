@@ -17,6 +17,8 @@ import {  multipartPlugin} from './plugins/multipart';
 import log from 'consola';
 import ck from 'chalk';
 
+import {Env} from './config/env'
+
 const app = fastify({
   logger: false,
 }).withTypeProvider<ZodTypeProvider>();
@@ -82,7 +84,7 @@ app.register(ScalarApiReference, {
 });
 
 app
-  .listen({ port: 3333, host: '0.0.0.0' })
+  .listen({ port: Env.PORT, host: '0.0.0.0' })
   .then(() => {
     log.log('');
     log.log('');
@@ -91,8 +93,8 @@ app
     log.success(ck.bold.blue('======================================='));
     log.log('');
     log.log('');
-    log.success(ck.bold.green('Server running at ' + ck.underline.blue('http://localhost:3333')));
-    log.success(ck.bold.green('API docs at' + ck.underline.blue(' http://localhost:3333/docs')));
+    log.success(ck.bold.green('Server running at ' + ck.underline.blue(`http://localhost:${Env.PORT}`)));
+    log.success(ck.bold.green('API docs at' + ck.underline.blue(`http://localhost:${Env.PORT}/docs`)));
   })
   .catch((err) => {
     log.error(err);

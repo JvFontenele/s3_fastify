@@ -38,7 +38,6 @@ export class FileController extends BaseController {
       stream: file.file,
       originalName: file.filename,
       mimeType: file.mimetype,
-      size: file.file.bytesRead,
       personId: Number(request.user.person.id),
     });
 

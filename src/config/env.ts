@@ -8,7 +8,7 @@ export class Env {
   static EXPIRE_TOKEN_TIME = process.env.EXPIRE_TIME || "3h";
 
   // S3 Configs
-  static S3_ENDPOINT = process.env.S3_ENDPOINT || "http://localhost:9000";
+  static S3_ENDPOINT = process.env.S3_ENDPOINT || "http://192.168.0.114:9000";
   static S3_REGION = process.env.S3_REGION || "us-east-1";
   static S3_ACCESS_KEY = process.env.S3_ACCESS_KEY || "minioadmin";
   static S3_SECRET_KEY = process.env.S3_SECRET_KEY || "minioadmin";

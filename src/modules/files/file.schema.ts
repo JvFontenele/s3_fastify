@@ -1,4 +1,5 @@
 import z from 'zod';
+import { Env } from '@/config/env';
 
 export const CreateFileInputSchema = z.object({
   buffer: z.instanceof(Buffer),
@@ -12,7 +13,6 @@ const CreateFileInputStream = z.object({
   stream: z.any(),
   originalName: z.string().min(1),
   mimeType: z.string().min(1),
-  size: z.number().min(1),
   personId: z.number(),
 });
 
@@ -25,8 +25,13 @@ export const GetFileParamsSchema = z.object({
 export const FileResponseSchema = z.object({
   id: z.number(),
   fileName: z.string(),
-  fileUrl: z.string(),
-  mimeType: z.string()
+  fileUrl: z.string().transform((data) => {
+    return `${Env.S3_ENDPOINT}${data}`;
+  }),
+  mimeType: z.string(),
+  size: z.bigint().transform((data) => {
+    return data.toString()
+  }),
 });
 
 export type CreateFileInput = z.infer<typeof CreateFileInputSchema>;

@@ -58,7 +58,7 @@ model File {
   key      String   @unique
   fileUrl  String
   mimeType String
-  size     Int
+  size     BigInt  
 
   personId Int
   person   Person @relation(fields: [personId], references: [id])

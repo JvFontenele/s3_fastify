@@ -3,6 +3,7 @@ import { CreateFileInput, CreateFileInputStream } from './file.schema';
 import { ConflictError } from '@/shared/errors/http-error';
 import { randomUUID } from 'node:crypto';
 import { StorageService } from '../storage/storage.service';
+import { normalizeFileName, streamWithSize } from '@/utils/file';
 
 export class FileService extends BaseService {
   private storage = new StorageService();
@@ -13,7 +14,7 @@ export class FileService extends BaseService {
       throw new ConflictError('Person not found');
     }
 
-    const key = `${data.personId}/${randomUUID()}-${data.originalName}`;
+    const key = `${data.personId}/${randomUUID()}-${normalizeFileName(data.originalName)}`;
 
     const { url } = await this.storage.upload(key, data.buffer, data.mimeType);
 
@@ -37,9 +38,11 @@ export class FileService extends BaseService {
       throw new ConflictError('Person not found');
     }
 
-    const key = `${data.personId}/${randomUUID()}-${data.originalName}`;
+    const key = `${data.personId}/${randomUUID()}-${normalizeFileName(data.originalName)}`;
 
-    const { url } = await this.storage.uploadStream(key, data.stream, data.mimeType);
+    const { stream, getSize } = streamWithSize(data.stream);
+
+    const { url } = await this.storage.uploadStream(key, stream, data.mimeType);
 
     const file = await this.prisma.file.create({
       data: {
@@ -47,7 +50,7 @@ export class FileService extends BaseService {
         key,
         fileUrl: url,
         mimeType: data.mimeType,
-        size: data.size,
+        size: BigInt(getSize()),
         personId: data.personId,
       },
     });
@@ -77,7 +80,14 @@ export class FileService extends BaseService {
 
   async findFilesByPersonId(personId: number, { skip, take }: { skip: number; take: number }) {
     const [data, total] = await Promise.all([
-      this.prisma.file.findMany({ skip, take, where: { personId } }),
+      this.prisma.file.findMany({
+        skip,
+        take,
+        where: { personId },
+        orderBy: {
+          mimeType: 'desc',
+        },
+      }),
       this.prisma.file.count({ where: { personId } }),
     ]);
 

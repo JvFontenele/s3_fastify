@@ -19,7 +19,7 @@ export class StorageService {
 
     return {
       key,
-      url: `${Env.S3_ENDPOINT}/${this.bucket}/${key}`,
+      url: `/${this.bucket}/${key}`,
     };
   }
 
@@ -41,7 +41,7 @@ export class StorageService {
 
     return {
       key,
-      url: `${Env.S3_ENDPOINT}/${this.bucket}/${key}`,
+      url: `/${this.bucket}/${key}`,
     };
   }
 

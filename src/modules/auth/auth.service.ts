@@ -1,5 +1,5 @@
 import { FastifyReply } from 'fastify';
-import { PrismaClient } from '../../../prisma/generated/client';
+import { PrismaClient } from '../../prisma/client'
 import { LoginAuthBody } from './auth.schema';
 import { verifyHash } from '@/utils/hash';
 import { randomUUID } from 'crypto';

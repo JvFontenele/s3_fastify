@@ -1,6 +1,6 @@
 import fp from 'fastify-plugin';
 import { ZodError } from 'zod';
-import { Prisma } from '../../prisma/generated/client';
+import { Prisma } from '../prisma/client';
 import { AppError } from '@/shared/errors/AppError';
 import { prismaErrorToHttp } from '@/shared/errors/prisma-error';
 import type { FastifyError } from 'fastify';

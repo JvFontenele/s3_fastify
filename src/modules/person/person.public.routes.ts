@@ -3,7 +3,6 @@ import type { FastifyInstance } from 'fastify';
 import { PersonController } from './person.controller';
 import { PersonService } from './person.service';
 import { CreatePersonBodySchema, PersonResponseSchema } from './person.schema';
-import { authHook } from '@/hooks/auth';
 
 const tag = 'Person';
 
@@ -18,11 +17,9 @@ export default async function personRoutes(app: FastifyInstance) {
         summary: 'Public Create a new person',
         tags: [tag],
         body: CreatePersonBodySchema,
-        response: { 201: PersonResponseSchema },
+        response: { 201: PersonResponseSchema, 200: PersonResponseSchema },
       },
     },
-    controller.postPerson,
+    controller.postPersonPublic,
   );
-
-  
 }

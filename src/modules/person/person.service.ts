@@ -22,6 +22,12 @@ export class PersonService extends BaseService {
     return this.prisma.person.findUnique({ where: { id } });
   }
 
+  async findByCPF_CNPJ(cpfCnpj: string) {
+    const person = await this.prisma.person.findUnique({ where: { cpfCnpj } });
+
+    return person;
+  }
+
   async delete(id: number) {
     const person = await this.prisma.person.findUnique({ where: { id } });
     if (!person) {

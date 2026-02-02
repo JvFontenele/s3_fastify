@@ -13,6 +13,17 @@ export class PersonController extends BaseController {
     return this.created(reply, person);
   };
 
+  postPersonPublic = async (request: FastifyRequest<{ Body: CreatePersonBody }>, reply: FastifyReply) => {
+    const existPerson = await this.service.findByCPF_CNPJ(request.body.cpfCnpj);
+    if (existPerson) {
+      return this.ok(reply, existPerson);
+    }
+
+    const person = await this.service.create(request.body);
+
+    return this.created(reply, person);
+  };
+
   getAllPersons = async (request: FastifyRequest, reply: FastifyReply) => {
     const { page, limit, skip, take } = this.getPagination(request);
     const { data, total } = await this.service.findAll({

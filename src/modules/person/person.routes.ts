@@ -12,8 +12,6 @@ export default async function personRoutes(app: FastifyInstance) {
   const service = new PersonService(app.prisma);
   const controller = new PersonController(service);
 
-
-
   app.post(
     '/',
     {

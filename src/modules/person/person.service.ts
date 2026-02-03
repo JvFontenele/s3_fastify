@@ -12,7 +12,7 @@ export class PersonService extends BaseService {
   async create(data: CreatePersonBody) {
     const existPerson = await this.prisma.person.findUnique({ where: { email: data.email } });
     if (existPerson) {
-      throw new ConflictError('Person with this email already exists');
+      throw new ConflictError('Pessoa já cadastrada.');
     }
 
     return this.prisma.person.create({ data });
@@ -31,7 +31,7 @@ export class PersonService extends BaseService {
   async delete(id: number) {
     const person = await this.prisma.person.findUnique({ where: { id } });
     if (!person) {
-      throw new NotFoundError('Person not found');
+      throw new NotFoundError('Pessoa não encontrada.');
     }
     return this.prisma.person.delete({ where: { id } });
   }

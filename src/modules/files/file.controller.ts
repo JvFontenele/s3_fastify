@@ -12,7 +12,7 @@ export class FileController extends BaseController {
     const file = await request.file();
 
     if (!file) {
-      return new BadRequestError('File is required');
+      return new BadRequestError('O arquivo é obrigatorio.');
     }
 
     const buffer = await file.toBuffer();
@@ -31,7 +31,7 @@ export class FileController extends BaseController {
     const file = await request.file();
 
     if (!file) {
-      return new BadRequestError('File is required');
+      return new BadRequestError('O arquivo é obrigatorio.');
     }
 
     const saved = await this.service.uploadStream({

@@ -27,7 +27,7 @@ export class AuthController extends BaseController {
     const token = request.cookies.refreshToken;
 
     if (!token) {
-      throw new UnauthorizedError('Refresh token missing');
+      throw new UnauthorizedError('Refresh token não encontrado.');
     }
 
     const { accessToken, user } = await this.authService.refreshToken(token, reply);
@@ -41,7 +41,7 @@ export class AuthController extends BaseController {
     const token = request.cookies.refreshToken;
 
     if (!token) {
-      throw new UnauthorizedError('Refresh token missing');
+      throw new UnauthorizedError('Refresh token não encontrado.');
     }
 
     await this.authService.logout(token, reply);

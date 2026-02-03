@@ -63,7 +63,7 @@ export class AuthService {
     });
 
     if (!stored || stored.revoked || stored.expiresAt < new Date()) {
-      throw new UnauthorizedError('Invalid refresh token');
+      throw new UnauthorizedError('Refresh token inválido.');
     }
 
     const user = await this.prisma.user.findUnique({

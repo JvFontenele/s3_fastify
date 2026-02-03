@@ -21,7 +21,7 @@ const errorPlugin = fp(async (app) => {
 
     if (error instanceof ZodError) {
       return reply.status(422).send({
-        message: 'Validation error',
+        message: 'Erro de Validação',
         code: 'VALIDATION_ERROR',
         errors: error.issues.map(({ path, message }) => ({
           field: path.length ? path.join('.') : null,
@@ -32,7 +32,7 @@ const errorPlugin = fp(async (app) => {
 
     if (error?.code && error.code === 'FST_ERR_VALIDATION' && error.validation) {
       return reply.status(422).send({
-        message: 'Validation error',
+        message: 'Erro de Validação',
         code: 'VALIDATION_ERROR',
         errors: error.validation.map((v: any) => ({
           field: v.instancePath
@@ -45,14 +45,14 @@ const errorPlugin = fp(async (app) => {
     
     if (error?.code && error.code === 'FST_INVALID_MULTIPART_CONTENT_TYPE') {
       return reply.status(422).send({
-        message: 'The request is not multipart',
+        message: 'Tipo de arquivo inválido',
         code: 'VALIDATION_ERROR',
       });
     }
 
     if (error?.code && error.code === 'FST_REQ_FILE_TOO_LARGE') {
       return reply.status(413).send({
-        message: 'Payload Too Large',
+        message: 'Requisição muito grande',
         code: 'FILE_TOO_LARGE',
       });
     }

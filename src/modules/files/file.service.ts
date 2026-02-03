@@ -11,7 +11,7 @@ export class FileService extends BaseService {
   async upload(data: CreateFileInput) {
     const existPerson = await this.prisma.person.findUnique({ where: { id: data.personId } });
     if (!existPerson) {
-      throw new ConflictError('Person not found');
+      throw new ConflictError('Pessoa não encontrada.');
     }
 
     const key = `${data.personId}/${randomUUID()}-${normalizeFileName(data.originalName)}`;
@@ -35,7 +35,7 @@ export class FileService extends BaseService {
   async uploadStream(data: CreateFileInputStream) {
     const existPerson = await this.prisma.person.findUnique({ where: { id: data.personId } });
     if (!existPerson) {
-      throw new ConflictError('Person not found');
+      throw new ConflictError('Pessoa não encontrada.');
     }
 
     const key = `${data.personId}/${randomUUID()}-${normalizeFileName(data.originalName)}`;
@@ -62,13 +62,13 @@ export class FileService extends BaseService {
     const person = await this.prisma.person.findUnique({ where: { id: idPessoa } });
 
     if (!person) {
-      throw new ConflictError('Person not found');
+      throw new ConflictError('Pessoa não encontrada.');
     }
 
     const file = await this.prisma.file.findUnique({ where: { id } });
 
     if (!file) {
-      throw new ConflictError('File not found');
+      throw new ConflictError('Arquivo não encontrado.');
     }
 
     await this.storage.delete(file.key);

@@ -24,7 +24,7 @@ export class UserService extends BaseService {
     const person = await this.prisma.person.findUnique({ where: { id: data.personId } });
 
     if (!person) {
-      throw new NotFoundError('Person not found');
+      throw new NotFoundError('Pessoa não encontrada.');
     }
 
     const existeUser = await this.prisma.user.findMany({
@@ -32,7 +32,7 @@ export class UserService extends BaseService {
     });
 
     if (existeUser.length > 0) {
-      throw new ConflictError('User already exists for this person');
+      throw new ConflictError('Já existe um usuário cadastrado para essa pessoa.');
     }
 
     const newPassword = await hashString(data.password);
@@ -59,7 +59,7 @@ export class UserService extends BaseService {
   async delete(id: number) {
     const user = await this.prisma.user.findUnique({ where: { id } });
     if (!user) {
-      throw new NotFoundError('User not found');
+      throw new NotFoundError('Usuário não encontrado.');
     }
     return this.prisma.user.delete({ where: { id } });
   }

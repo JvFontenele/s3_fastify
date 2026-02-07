@@ -234,6 +234,7 @@ export type PersonWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   users?: Prisma.UserListRelationFilter
   files?: Prisma.FileListRelationFilter
+  folders?: Prisma.FolderListRelationFilter
 }
 
 export type PersonOrderByWithRelationInput = {
@@ -246,6 +247,7 @@ export type PersonOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   users?: Prisma.UserOrderByRelationAggregateInput
   files?: Prisma.FileOrderByRelationAggregateInput
+  folders?: Prisma.FolderOrderByRelationAggregateInput
 }
 
 export type PersonWhereUniqueInput = Prisma.AtLeast<{
@@ -261,6 +263,7 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   users?: Prisma.UserListRelationFilter
   files?: Prisma.FileListRelationFilter
+  folders?: Prisma.FolderListRelationFilter
 }, "id" | "email" | "cpfCnpj">
 
 export type PersonOrderByWithAggregationInput = {
@@ -300,6 +303,7 @@ export type PersonCreateInput = {
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutPersonInput
   files?: Prisma.FileCreateNestedManyWithoutPersonInput
+  folders?: Prisma.FolderCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateInput = {
@@ -312,6 +316,7 @@ export type PersonUncheckedCreateInput = {
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutPersonInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutPersonInput
+  folders?: Prisma.FolderUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUpdateInput = {
@@ -323,6 +328,7 @@ export type PersonUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutPersonNestedInput
   files?: Prisma.FileUpdateManyWithoutPersonNestedInput
+  folders?: Prisma.FolderUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateInput = {
@@ -335,6 +341,7 @@ export type PersonUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutPersonNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutPersonNestedInput
+  folders?: Prisma.FolderUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateManyInput = {
@@ -457,6 +464,20 @@ export type PersonUpdateOneRequiredWithoutFilesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutFilesInput, Prisma.PersonUpdateWithoutFilesInput>, Prisma.PersonUncheckedUpdateWithoutFilesInput>
 }
 
+export type PersonCreateNestedOneWithoutFoldersInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutFoldersInput, Prisma.PersonUncheckedCreateWithoutFoldersInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutFoldersInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutFoldersNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutFoldersInput, Prisma.PersonUncheckedCreateWithoutFoldersInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutFoldersInput
+  upsert?: Prisma.PersonUpsertWithoutFoldersInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutFoldersInput, Prisma.PersonUpdateWithoutFoldersInput>, Prisma.PersonUncheckedUpdateWithoutFoldersInput>
+}
+
 export type PersonCreateWithoutUsersInput = {
   name: string
   email?: string | null
@@ -465,6 +486,7 @@ export type PersonCreateWithoutUsersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   files?: Prisma.FileCreateNestedManyWithoutPersonInput
+  folders?: Prisma.FolderCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutUsersInput = {
@@ -476,6 +498,7 @@ export type PersonUncheckedCreateWithoutUsersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   files?: Prisma.FileUncheckedCreateNestedManyWithoutPersonInput
+  folders?: Prisma.FolderUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutUsersInput = {
@@ -502,6 +525,7 @@ export type PersonUpdateWithoutUsersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   files?: Prisma.FileUpdateManyWithoutPersonNestedInput
+  folders?: Prisma.FolderUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutUsersInput = {
@@ -513,6 +537,7 @@ export type PersonUncheckedUpdateWithoutUsersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   files?: Prisma.FileUncheckedUpdateManyWithoutPersonNestedInput
+  folders?: Prisma.FolderUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutFilesInput = {
@@ -523,6 +548,7 @@ export type PersonCreateWithoutFilesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutPersonInput
+  folders?: Prisma.FolderCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutFilesInput = {
@@ -534,6 +560,7 @@ export type PersonUncheckedCreateWithoutFilesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutPersonInput
+  folders?: Prisma.FolderUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutFilesInput = {
@@ -560,6 +587,7 @@ export type PersonUpdateWithoutFilesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutPersonNestedInput
+  folders?: Prisma.FolderUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutFilesInput = {
@@ -571,6 +599,69 @@ export type PersonUncheckedUpdateWithoutFilesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutPersonNestedInput
+  folders?: Prisma.FolderUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutFoldersInput = {
+  name: string
+  email?: string | null
+  cpfCnpj: string
+  type: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutPersonInput
+  files?: Prisma.FileCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutFoldersInput = {
+  id?: number
+  name: string
+  email?: string | null
+  cpfCnpj: string
+  type: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutPersonInput
+  files?: Prisma.FileUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutFoldersInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutFoldersInput, Prisma.PersonUncheckedCreateWithoutFoldersInput>
+}
+
+export type PersonUpsertWithoutFoldersInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutFoldersInput, Prisma.PersonUncheckedUpdateWithoutFoldersInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutFoldersInput, Prisma.PersonUncheckedCreateWithoutFoldersInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutFoldersInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutFoldersInput, Prisma.PersonUncheckedUpdateWithoutFoldersInput>
+}
+
+export type PersonUpdateWithoutFoldersInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cpfCnpj?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutPersonNestedInput
+  files?: Prisma.FileUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutFoldersInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cpfCnpj?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutPersonNestedInput
+  files?: Prisma.FileUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 
@@ -581,11 +672,13 @@ export type PersonUncheckedUpdateWithoutFilesInput = {
 export type PersonCountOutputType = {
   users: number
   files: number
+  folders: number
 }
 
 export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | PersonCountOutputTypeCountUsersArgs
   files?: boolean | PersonCountOutputTypeCountFilesArgs
+  folders?: boolean | PersonCountOutputTypeCountFoldersArgs
 }
 
 /**
@@ -612,6 +705,13 @@ export type PersonCountOutputTypeCountFilesArgs<ExtArgs extends runtime.Types.Ex
   where?: Prisma.FileWhereInput
 }
 
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountFoldersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FolderWhereInput
+}
+
 
 export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -623,6 +723,7 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   updatedAt?: boolean
   users?: boolean | Prisma.Person$usersArgs<ExtArgs>
   files?: boolean | Prisma.Person$filesArgs<ExtArgs>
+  folders?: boolean | Prisma.Person$foldersArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["person"]>
 
@@ -660,6 +761,7 @@ export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.Person$usersArgs<ExtArgs>
   files?: boolean | Prisma.Person$filesArgs<ExtArgs>
+  folders?: boolean | Prisma.Person$foldersArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PersonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -670,6 +772,7 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   objects: {
     users: Prisma.$UserPayload<ExtArgs>[]
     files: Prisma.$FilePayload<ExtArgs>[]
+    folders: Prisma.$FolderPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1075,6 +1178,7 @@ export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.T
   readonly [Symbol.toStringTag]: "PrismaPromise"
   users<T extends Prisma.Person$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   files<T extends Prisma.Person$filesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$filesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  folders<T extends Prisma.Person$foldersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$foldersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FolderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1544,6 +1648,30 @@ export type Person$filesArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.FileScalarFieldEnum | Prisma.FileScalarFieldEnum[]
+}
+
+/**
+ * Person.folders
+ */
+export type Person$foldersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Folder
+   */
+  select?: Prisma.FolderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Folder
+   */
+  omit?: Prisma.FolderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FolderInclude<ExtArgs> | null
+  where?: Prisma.FolderWhereInput
+  orderBy?: Prisma.FolderOrderByWithRelationInput | Prisma.FolderOrderByWithRelationInput[]
+  cursor?: Prisma.FolderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FolderScalarFieldEnum | Prisma.FolderScalarFieldEnum[]
 }
 
 /**

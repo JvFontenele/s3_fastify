@@ -14,7 +14,18 @@ export class FileService extends BaseService {
       throw new ConflictError('Pessoa não encontrada.');
     }
 
-    const key = `${data.personId}/${randomUUID()}-${normalizeFileName(data.originalName)}`;
+    const folder = data.folderId
+      ? await this.prisma.folder.findFirst({
+          where: { id: data.folderId, personId: data.personId },
+        })
+      : null;
+
+    if (data.folderId && !folder) {
+      throw new ConflictError('Pasta não encontrada.');
+    }
+
+    const folderPrefix = folder ? `${folder.path}/` : '';
+    const key = `${data.personId}/${folderPrefix}${randomUUID()}-${normalizeFileName(data.originalName)}`;
 
     const { url } = await this.storage.upload(key, data.buffer, data.mimeType);
 
@@ -26,6 +37,7 @@ export class FileService extends BaseService {
         mimeType: data.mimeType,
         size: data.size,
         personId: data.personId,
+        folderId: data.folderId,
       },
     });
 
@@ -38,7 +50,18 @@ export class FileService extends BaseService {
       throw new ConflictError('Pessoa não encontrada.');
     }
 
-    const key = `${data.personId}/${randomUUID()}-${normalizeFileName(data.originalName)}`;
+    const folder = data.folderId
+      ? await this.prisma.folder.findFirst({
+          where: { id: data.folderId, personId: data.personId },
+        })
+      : null;
+
+    if (data.folderId && !folder) {
+      throw new ConflictError('Pasta não encontrada.');
+    }
+
+    const folderPrefix = folder ? `${folder.path}/` : '';
+    const key = `${data.personId}/${folderPrefix}${randomUUID()}-${normalizeFileName(data.originalName)}`;
 
     const { stream, getSize } = streamWithSize(data.stream);
 
@@ -52,6 +75,7 @@ export class FileService extends BaseService {
         mimeType: data.mimeType,
         size: BigInt(getSize()),
         personId: data.personId,
+        folderId: data.folderId,
       },
     });
 
@@ -78,17 +102,25 @@ export class FileService extends BaseService {
     });
   }
 
-  async findFilesByPersonId(personId: number, { skip, take }: { skip: number; take: number }) {
+  async findFilesByPersonId(
+    personId: number,
+    { skip, take, folderId }: { skip: number; take: number; folderId?: number },
+  ) {
+    const where = {
+      personId,
+      ...(folderId !== undefined ? { folderId } : {}),
+    };
+
     const [data, total] = await Promise.all([
       this.prisma.file.findMany({
         skip,
         take,
-        where: { personId },
+        where,
         orderBy: {
           mimeType: 'desc',
         },
       }),
-      this.prisma.file.count({ where: { personId } }),
+      this.prisma.file.count({ where }),
     ]);
 
     return { data, total };

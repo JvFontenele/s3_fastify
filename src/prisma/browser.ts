@@ -37,3 +37,8 @@ export type RefreshToken = Prisma.RefreshTokenModel
  * 
  */
 export type File = Prisma.FileModel
+/**
+ * Model Folder
+ * 
+ */
+export type Folder = Prisma.FolderModel

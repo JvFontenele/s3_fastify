@@ -7,6 +7,7 @@ export const CreateFileInputSchema = z.object({
   mimeType: z.string().min(1),
   size: z.number().min(1),
   personId: z.number(),
+  folderId: z.number().optional(),
 });
 
 const CreateFileInputStream = z.object({
@@ -14,12 +15,17 @@ const CreateFileInputStream = z.object({
   originalName: z.string().min(1),
   mimeType: z.string().min(1),
   personId: z.number(),
+  folderId: z.number().optional(),
 });
 
 export const FileUploadSchema = z.any().describe('Arquivo a ser enviado');
 
 export const GetFileParamsSchema = z.object({
   id: z.string().transform(Number),
+});
+
+export const FileListQuerySchema = z.object({
+  folderId: z.coerce.number().int().optional(),
 });
 
 export const FileResponseSchema = z.object({
@@ -32,9 +38,11 @@ export const FileResponseSchema = z.object({
   size: z.bigint().transform((data) => {
     return data.toString()
   }),
+  folderId: z.number().nullable(),
 });
 
 export type CreateFileInput = z.infer<typeof CreateFileInputSchema>;
 export type CreateFileInputStream = z.infer<typeof CreateFileInputStream>;
 export type GetFileParams = z.infer<typeof GetFileParamsSchema>;
 export type FileResponse = z.infer<typeof FileResponseSchema>;
+export type FileListQuery = z.infer<typeof FileListQuerySchema>;

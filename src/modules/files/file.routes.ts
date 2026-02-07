@@ -3,7 +3,7 @@ import { authHook } from '@/hooks/auth';
 import { FastifyInstance } from 'fastify';
 import { FileService } from './file.service';
 import { FileController } from './file.controller';
-import { FileResponseSchema, FileUploadSchema, GetFileParamsSchema } from './file.schema';
+import { FileResponseSchema, FileUploadSchema, FileListQuerySchema, GetFileParamsSchema } from './file.schema';
 
 const tag = 'File';
 
@@ -55,7 +55,7 @@ export default async function fileRoutes(app: FastifyInstance) {
         summary: 'Get all files by person',
         tags: [tag],
         security: [{ bearerAuth: [] }],
-        querystring: PaginationQuerySchema,
+        querystring: PaginationQuerySchema.merge(FileListQuerySchema),
         response: {
           200: PaginatedResponseSchema(FileResponseSchema.array()),
         },

@@ -60,7 +60,7 @@ describe('FileService', () => {
 
   it('uploads file and persists metadata', async () => {
     prisma.person.findUnique.mockResolvedValue({ id: 1 })
-    prisma.folder.findFirst.mockResolvedValue({ id: 2, path: 'docs' })
+    prisma.folder.findFirst.mockResolvedValue({ id: 2, path: 'docs', allowedTypes: [] })
     storageMocks.upload.mockResolvedValue({ url: '/bucket/key' })
     prisma.file.create.mockResolvedValue({ id: 10 })
 
@@ -81,6 +81,48 @@ describe('FileService', () => {
     )
     expect(prisma.file.create).toHaveBeenCalled()
     expect(result).toEqual({ id: 10 })
+  })
+
+  it('rejects upload when folder has restricted types and file is not allowed', async () => {
+    prisma.person.findUnique.mockResolvedValue({ id: 1 })
+    prisma.folder.findFirst.mockResolvedValue({ id: 2, path: 'docs', allowedTypes: ['pdf'] })
+
+    const service = new FileService(prisma)
+
+    await expect(
+      service.upload({
+        personId: 1,
+        originalName: 'foto.jpg',
+        buffer: Buffer.from('x'),
+        mimeType: 'image/jpeg',
+        size: 10,
+        folderId: 2,
+      }),
+    ).rejects.toThrow('Tipo de arquivo não permitido nesta pasta.')
+  })
+
+  it('accepts upload when mime type is allowed by folder', async () => {
+    prisma.person.findUnique.mockResolvedValue({ id: 1 })
+    prisma.folder.findFirst.mockResolvedValue({
+      id: 2,
+      path: 'docs',
+      allowedTypes: ['image/jpeg'],
+    })
+    storageMocks.upload.mockResolvedValue({ url: '/bucket/key' })
+    prisma.file.create.mockResolvedValue({ id: 11 })
+
+    const service = new FileService(prisma)
+    const result = await service.upload({
+      personId: 1,
+      originalName: 'foto.jpg',
+      buffer: Buffer.from('x'),
+      mimeType: 'image/jpeg',
+      size: 10,
+      folderId: 2,
+    })
+
+    expect(result).toEqual({ id: 11 })
+    expect(storageMocks.upload).toHaveBeenCalled()
   })
 
   it('deletes file and its storage object', async () => {

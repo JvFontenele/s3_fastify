@@ -1,5 +1,5 @@
 import { BaseController } from '@/shared/BaseController';
-import { FileService } from './file.service';
+import { FileService } from './file.service.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { BadRequestError, NotFoundError } from '@/shared/errors/http-error';
 

@@ -1,5 +1,5 @@
 import type { FastifyRequest, FastifyReply } from 'fastify';
-import { StorageService } from './storage.service';
+import { StorageService } from './storage.service.js';
 import { randomUUID } from 'crypto';
 
 const storage = new StorageService();

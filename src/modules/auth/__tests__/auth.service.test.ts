@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { AuthService } from '../auth.service'
+import { AuthService } from '../auth.service.js'
 import { UnauthorizedError } from '@/shared/errors/http-error'
 
 const verifyHashMock = vi.hoisted(() => vi.fn())

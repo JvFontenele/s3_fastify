@@ -1,6 +1,6 @@
 import { FastifyReply } from 'fastify';
-import { PrismaClient } from '../../prisma/client'
-import { LoginAuthBody } from './auth.schema';
+import { PrismaClient } from '../../prisma/client.js'
+import { LoginAuthBody } from './auth.schema.js';
 import { verifyHash } from '@/utils/hash';
 import { randomUUID } from 'crypto';
 import { UnauthorizedError } from '@/shared/errors/http-error';

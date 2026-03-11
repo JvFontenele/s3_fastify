@@ -1,8 +1,8 @@
 // user.controller.ts
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { BaseController } from '@/shared/BaseController';
-import { UserService } from './user.service';
-import type { CreateUserBody } from './user.schema';
+import { UserService } from './user.service.js';
+import type { CreateUserBody } from './user.schema.js';
 
 export class UserController extends BaseController {
   constructor(private readonly userService: UserService) {

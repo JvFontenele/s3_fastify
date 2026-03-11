@@ -1,6 +1,6 @@
 // src/modules/user/user.service.ts
 import { BaseService } from '@/shared/BaseService';
-import { CreatePersonBody } from './person.schema';
+import { CreatePersonBody } from './person.schema.js';
 import { ConflictError, NotFoundError } from '@/shared/errors/http-error';
 
 export class PersonService extends BaseService {

@@ -1,6 +1,6 @@
 // user.schema.ts
 import { z } from 'zod';
-import { PersonResponseSchema } from '../person/person.schema';
+import { PersonResponseSchema } from '../person/person.schema.js';
 
 export const CreateUserBodySchema = z.object({
   password: z.string().min(6),

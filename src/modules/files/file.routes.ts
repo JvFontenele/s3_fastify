@@ -1,9 +1,9 @@
 import { PaginatedResponseSchema, PaginationQuerySchema } from '@/schemas/pagination.schema';
 import { authHook } from '@/hooks/auth';
 import { FastifyInstance } from 'fastify';
-import { FileService } from './file.service';
-import { FileController } from './file.controller';
-import { FileResponseSchema, FileUploadSchema, FileListQuerySchema, GetFileParamsSchema } from './file.schema';
+import { FileService } from './file.service.js';
+import { FileController } from './file.controller.js';
+import { FileResponseSchema, FileUploadSchema, FileListQuerySchema, GetFileParamsSchema } from './file.schema.js';
 
 const tag = 'File';
 

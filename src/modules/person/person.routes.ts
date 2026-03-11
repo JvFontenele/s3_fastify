@@ -1,8 +1,8 @@
 // src/modules/person/person.routes.ts
 import type { FastifyInstance } from 'fastify';
-import { PersonController } from './person.controller';
-import { PersonService } from './person.service';
-import { CreatePersonBodySchema, GetPersonParamsSchema, PersonResponseSchema } from './person.schema';
+import { PersonController } from './person.controller.js';
+import { PersonService } from './person.service.js';
+import { CreatePersonBodySchema, GetPersonParamsSchema, PersonResponseSchema } from './person.schema.js';
 import { PaginationQuerySchema, PaginatedResponseSchema } from '@/schemas/pagination.schema';
 import { authHook } from '@/hooks/auth';
 

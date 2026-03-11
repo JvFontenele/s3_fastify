@@ -1,8 +1,8 @@
 // person.controller.ts
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { BaseController } from '@/shared/BaseController';
-import { PersonService } from './person.service';
-import { CreatePersonBody } from './person.schema';
+import { PersonService } from './person.service.js';
+import { CreatePersonBody } from './person.schema.js';
 
 export class PersonController extends BaseController {
   constructor(private readonly service: PersonService) {

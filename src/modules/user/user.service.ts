@@ -1,6 +1,6 @@
 // src/modules/user/user.service.ts
 import { BaseService } from '@/shared/BaseService';
-import { CreateUserBody } from './user.schema';
+import { CreateUserBody } from './user.schema.js';
 import { ConflictError, NotFoundError } from '@/shared/errors/http-error';
 import { hashString } from '@/utils/hash';
 

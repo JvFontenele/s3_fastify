@@ -1,13 +1,13 @@
 import type { FastifyInstance } from 'fastify';
 import { authHook } from '@/hooks/auth';
-import { FolderService } from './folder.service';
-import { FolderController } from './folder.controller';
+import { FolderService } from './folder.service.js';
+import { FolderController } from './folder.controller.js';
 import {
   CreateFolderBodySchema,
   FolderListQuerySchema,
   FolderResponseSchema,
   GetFolderParamsSchema,
-} from './folder.schema';
+} from './folder.schema.js';
 import { PaginatedResponseSchema } from '@/schemas/pagination.schema';
 
 const tag = 'Folder';

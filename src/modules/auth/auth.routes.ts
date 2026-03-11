@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { LoginAuthBodySchema, AuthResponseSchema } from './auth.schema';
+import { AuthController } from './auth.controller.js';
+import { AuthService } from './auth.service.js';
+import { LoginAuthBodySchema, AuthResponseSchema } from './auth.schema.js';
 
 const tag = 'Auth';
 

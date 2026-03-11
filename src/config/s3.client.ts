@@ -1,5 +1,5 @@
 import { S3Client } from '@aws-sdk/client-s3';
-import { Env } from './env';
+import { Env } from './env.js';
 
 export const s3Client = new S3Client({
   endpoint: Env.S3_ENDPOINT,

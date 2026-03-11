@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { FolderService } from '../folder.service'
+import { FolderService } from '../folder.service.js'
 
 describe('FolderService', () => {
   const prisma = {

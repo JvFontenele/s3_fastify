@@ -1,6 +1,6 @@
 import fp from 'fastify-plugin'
 import type { FastifyInstance } from 'fastify'
-import { prisma } from '../config/dataBase'
+import { prisma } from '../config/dataBase.js'
 
 const prismaPlugin = fp(async (fastify: FastifyInstance) => {
   // Conecta no start

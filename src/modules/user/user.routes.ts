@@ -1,8 +1,8 @@
 // src/modules/user/user.routes.ts
 import type { FastifyInstance } from 'fastify';
-import { UserController } from './user.controller';
-import { UserService } from './user.service';
-import { CreateUserBodySchema, GetUserParamsSchema, UserResponseSchema } from './user.schema';
+import { UserController } from './user.controller.js';
+import { UserService } from './user.service.js';
+import { CreateUserBodySchema, GetUserParamsSchema, UserResponseSchema } from './user.schema.js';
 import { PaginationQuerySchema, PaginatedResponseSchema } from '@/schemas/pagination.schema';
 import { authHook } from '@/hooks/auth';
 

@@ -1,6 +1,6 @@
-import { LoginAuthBody } from './auth.schema';
+import { LoginAuthBody } from './auth.schema.js';
 import { BaseController } from '@/shared/BaseController';
-import { AuthService } from './auth.service';
+import { AuthService } from './auth.service.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { UnauthorizedError } from '@/shared/errors/http-error';
 import { clearCookie, setCookie } from '@/utils/cookies';

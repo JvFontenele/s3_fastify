@@ -1,8 +1,8 @@
 import { BaseController } from '@/shared/BaseController';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { BadRequestError } from '@/shared/errors/http-error';
-import type { CreateFolderBody } from './folder.schema';
-import { FolderService } from './folder.service';
+import type { CreateFolderBody } from './folder.schema.js';
+import { FolderService } from './folder.service.js';
 
 export class FolderController extends BaseController {
   constructor(private readonly service: FolderService) {

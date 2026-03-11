@@ -1,4 +1,4 @@
-import type { PrismaClient } from '../prisma/client'
+import type { PrismaClient } from '../prisma/client.js'
 
 export abstract class BaseService {
   protected prisma: PrismaClient

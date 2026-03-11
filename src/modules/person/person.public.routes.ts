@@ -1,8 +1,8 @@
 // src/modules/person/person.routes.ts
 import type { FastifyInstance } from 'fastify';
-import { PersonController } from './person.controller';
-import { PersonService } from './person.service';
-import { CreatePersonBodySchema, PersonResponseSchema } from './person.schema';
+import { PersonController } from './person.controller.js';
+import { PersonService } from './person.service.js';
+import { CreatePersonBodySchema, PersonResponseSchema } from './person.schema.js';
 
 const tag = 'Person';
 

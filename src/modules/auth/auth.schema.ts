@@ -1,6 +1,6 @@
 // auth.schema.ts
 import { email, z } from 'zod';
-import { UserResponseSchema } from '../user/user.schema';
+import { UserResponseSchema } from '../user/user.schema.js';
 
 export const LoginAuthBodySchema = z.object({
   email: z.string(),

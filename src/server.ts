@@ -6,22 +6,25 @@ import { fastifyCors } from '@fastify/cors';
 import autoload from '@fastify/autoload';
 import ScalarApiReference from '@scalar/fastify-api-reference';
 
-import { prismaPlugin } from './plugins/prisma';
-import { jwtPlugin } from './plugins/jwt';
+import { prismaPlugin } from './plugins/prisma.js';
+import { jwtPlugin } from './plugins/jwt.js';
 
-import { join } from 'node:path';
-import { cookiePlugin } from './plugins/cookie';
-import { errorPlugin } from './plugins/error-handler';
-import {  multipartPlugin} from './plugins/multipart';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { cookiePlugin } from './plugins/cookie.js';
+import { errorPlugin } from './plugins/error-handler.js';
+import {  multipartPlugin} from './plugins/multipart.js';
 
 import log from 'consola';
 import ck from 'chalk';
 
-import {Env} from './config/env'
+import {Env} from './config/env.js'
 
 const app = fastify({
   logger: false,
 }).withTypeProvider<ZodTypeProvider>();
+
+const appDir = dirname(fileURLToPath(import.meta.url));
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
@@ -63,7 +66,7 @@ app.register(jwtPlugin);
 app.register(errorPlugin);
 
 app.register(autoload, {
-  dir: join(__dirname, 'modules'),
+  dir: join(appDir, 'modules'),
   routeParams: true,
   ignorePattern: /(^|[\\/])__tests__([\\/]|$)|\.(test|spec)\.(t|j)s$/,
 });

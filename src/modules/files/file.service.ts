@@ -1,8 +1,8 @@
 import { BaseService } from '@/shared/BaseService';
-import { CreateFileInput, CreateFileInputStream } from './file.schema';
+import { CreateFileInput, CreateFileInputStream } from './file.schema.js';
 import { ConflictError } from '@/shared/errors/http-error';
 import { randomUUID } from 'node:crypto';
-import { StorageService } from '../storage/storage.service';
+import { StorageService } from '../storage/storage.service.js';
 import { normalizeFileName, streamWithSize } from '@/utils/file';
 
 export class FileService extends BaseService {

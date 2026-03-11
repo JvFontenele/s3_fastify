@@ -1,6 +1,6 @@
 import { BaseService } from '@/shared/BaseService';
 import { ConflictError } from '@/shared/errors/http-error';
-import type { CreateFolderBody } from './folder.schema';
+import type { CreateFolderBody } from './folder.schema.js';
 
 export class FolderService extends BaseService {
   async createFolder(data: CreateFolderBody & { personId: number }) {

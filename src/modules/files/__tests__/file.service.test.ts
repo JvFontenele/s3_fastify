@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { FileService } from '../file.service'
+import { FileService } from '../file.service.js'
 
 const storageMocks = vi.hoisted(() => ({
   upload: vi.fn(),

@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.js"
-import type * as Prisma from "../internal/prismaNamespace.js"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Folder
@@ -62,6 +62,7 @@ export type FolderCountAggregateOutputType = {
   id: number
   name: number
   path: number
+  allowedTypes: number
   personId: number
   parentId: number
   createdAt: number
@@ -106,6 +107,7 @@ export type FolderCountAggregateInputType = {
   id?: true
   name?: true
   path?: true
+  allowedTypes?: true
   personId?: true
   parentId?: true
   createdAt?: true
@@ -203,6 +205,7 @@ export type FolderGroupByOutputType = {
   id: number
   name: string
   path: string
+  allowedTypes: string[]
   personId: number
   parentId: number | null
   createdAt: Date
@@ -236,6 +239,7 @@ export type FolderWhereInput = {
   id?: Prisma.IntFilter<"Folder"> | number
   name?: Prisma.StringFilter<"Folder"> | string
   path?: Prisma.StringFilter<"Folder"> | string
+  allowedTypes?: Prisma.StringNullableListFilter<"Folder">
   personId?: Prisma.IntFilter<"Folder"> | number
   parentId?: Prisma.IntNullableFilter<"Folder"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Folder"> | Date | string
@@ -250,6 +254,7 @@ export type FolderOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   path?: Prisma.SortOrder
+  allowedTypes?: Prisma.SortOrder
   personId?: Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -268,6 +273,7 @@ export type FolderWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.FolderWhereInput | Prisma.FolderWhereInput[]
   name?: Prisma.StringFilter<"Folder"> | string
   path?: Prisma.StringFilter<"Folder"> | string
+  allowedTypes?: Prisma.StringNullableListFilter<"Folder">
   personId?: Prisma.IntFilter<"Folder"> | number
   parentId?: Prisma.IntNullableFilter<"Folder"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Folder"> | Date | string
@@ -282,6 +288,7 @@ export type FolderOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   path?: Prisma.SortOrder
+  allowedTypes?: Prisma.SortOrder
   personId?: Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -300,6 +307,7 @@ export type FolderScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Folder"> | number
   name?: Prisma.StringWithAggregatesFilter<"Folder"> | string
   path?: Prisma.StringWithAggregatesFilter<"Folder"> | string
+  allowedTypes?: Prisma.StringNullableListFilter<"Folder">
   personId?: Prisma.IntWithAggregatesFilter<"Folder"> | number
   parentId?: Prisma.IntNullableWithAggregatesFilter<"Folder"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Folder"> | Date | string
@@ -309,6 +317,7 @@ export type FolderScalarWhereWithAggregatesInput = {
 export type FolderCreateInput = {
   name: string
   path: string
+  allowedTypes?: Prisma.FolderCreateallowedTypesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   person: Prisma.PersonCreateNestedOneWithoutFoldersInput
@@ -321,6 +330,7 @@ export type FolderUncheckedCreateInput = {
   id?: number
   name: string
   path: string
+  allowedTypes?: Prisma.FolderCreateallowedTypesInput | string[]
   personId: number
   parentId?: number | null
   createdAt?: Date | string
@@ -332,6 +342,7 @@ export type FolderUncheckedCreateInput = {
 export type FolderUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
+  allowedTypes?: Prisma.FolderUpdateallowedTypesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   person?: Prisma.PersonUpdateOneRequiredWithoutFoldersNestedInput
@@ -344,6 +355,7 @@ export type FolderUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
+  allowedTypes?: Prisma.FolderUpdateallowedTypesInput | string[]
   personId?: Prisma.IntFieldUpdateOperationsInput | number
   parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -356,6 +368,7 @@ export type FolderCreateManyInput = {
   id?: number
   name: string
   path: string
+  allowedTypes?: Prisma.FolderCreateallowedTypesInput | string[]
   personId: number
   parentId?: number | null
   createdAt?: Date | string
@@ -365,6 +378,7 @@ export type FolderCreateManyInput = {
 export type FolderUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
+  allowedTypes?: Prisma.FolderUpdateallowedTypesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -373,6 +387,7 @@ export type FolderUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
+  allowedTypes?: Prisma.FolderUpdateallowedTypesInput | string[]
   personId?: Prisma.IntFieldUpdateOperationsInput | number
   parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -394,6 +409,14 @@ export type FolderNullableScalarRelationFilter = {
   isNot?: Prisma.FolderWhereInput | null
 }
 
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
 export type FolderPersonIdParentIdNameCompoundUniqueInput = {
   personId: number
   parentId: number
@@ -404,6 +427,7 @@ export type FolderCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   path?: Prisma.SortOrder
+  allowedTypes?: Prisma.SortOrder
   personId?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -500,6 +524,10 @@ export type FolderUpdateOneWithoutFilesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.FolderUpdateToOneWithWhereWithoutFilesInput, Prisma.FolderUpdateWithoutFilesInput>, Prisma.FolderUncheckedUpdateWithoutFilesInput>
 }
 
+export type FolderCreateallowedTypesInput = {
+  set: string[]
+}
+
 export type FolderCreateNestedOneWithoutChildrenInput = {
   create?: Prisma.XOR<Prisma.FolderCreateWithoutChildrenInput, Prisma.FolderUncheckedCreateWithoutChildrenInput>
   connectOrCreate?: Prisma.FolderCreateOrConnectWithoutChildrenInput
@@ -518,6 +546,11 @@ export type FolderUncheckedCreateNestedManyWithoutParentInput = {
   connectOrCreate?: Prisma.FolderCreateOrConnectWithoutParentInput | Prisma.FolderCreateOrConnectWithoutParentInput[]
   createMany?: Prisma.FolderCreateManyParentInputEnvelope
   connect?: Prisma.FolderWhereUniqueInput | Prisma.FolderWhereUniqueInput[]
+}
+
+export type FolderUpdateallowedTypesInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type FolderUpdateOneWithoutChildrenNestedInput = {
@@ -561,6 +594,7 @@ export type FolderUncheckedUpdateManyWithoutParentNestedInput = {
 export type FolderCreateWithoutPersonInput = {
   name: string
   path: string
+  allowedTypes?: Prisma.FolderCreateallowedTypesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   parent?: Prisma.FolderCreateNestedOneWithoutChildrenInput
@@ -572,6 +606,7 @@ export type FolderUncheckedCreateWithoutPersonInput = {
   id?: number
   name: string
   path: string
+  allowedTypes?: Prisma.FolderCreateallowedTypesInput | string[]
   parentId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -612,6 +647,7 @@ export type FolderScalarWhereInput = {
   id?: Prisma.IntFilter<"Folder"> | number
   name?: Prisma.StringFilter<"Folder"> | string
   path?: Prisma.StringFilter<"Folder"> | string
+  allowedTypes?: Prisma.StringNullableListFilter<"Folder">
   personId?: Prisma.IntFilter<"Folder"> | number
   parentId?: Prisma.IntNullableFilter<"Folder"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Folder"> | Date | string
@@ -621,6 +657,7 @@ export type FolderScalarWhereInput = {
 export type FolderCreateWithoutFilesInput = {
   name: string
   path: string
+  allowedTypes?: Prisma.FolderCreateallowedTypesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   person: Prisma.PersonCreateNestedOneWithoutFoldersInput
@@ -632,6 +669,7 @@ export type FolderUncheckedCreateWithoutFilesInput = {
   id?: number
   name: string
   path: string
+  allowedTypes?: Prisma.FolderCreateallowedTypesInput | string[]
   personId: number
   parentId?: number | null
   createdAt?: Date | string
@@ -658,6 +696,7 @@ export type FolderUpdateToOneWithWhereWithoutFilesInput = {
 export type FolderUpdateWithoutFilesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
+  allowedTypes?: Prisma.FolderUpdateallowedTypesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   person?: Prisma.PersonUpdateOneRequiredWithoutFoldersNestedInput
@@ -669,6 +708,7 @@ export type FolderUncheckedUpdateWithoutFilesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
+  allowedTypes?: Prisma.FolderUpdateallowedTypesInput | string[]
   personId?: Prisma.IntFieldUpdateOperationsInput | number
   parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -679,6 +719,7 @@ export type FolderUncheckedUpdateWithoutFilesInput = {
 export type FolderCreateWithoutChildrenInput = {
   name: string
   path: string
+  allowedTypes?: Prisma.FolderCreateallowedTypesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   person: Prisma.PersonCreateNestedOneWithoutFoldersInput
@@ -690,6 +731,7 @@ export type FolderUncheckedCreateWithoutChildrenInput = {
   id?: number
   name: string
   path: string
+  allowedTypes?: Prisma.FolderCreateallowedTypesInput | string[]
   personId: number
   parentId?: number | null
   createdAt?: Date | string
@@ -705,6 +747,7 @@ export type FolderCreateOrConnectWithoutChildrenInput = {
 export type FolderCreateWithoutParentInput = {
   name: string
   path: string
+  allowedTypes?: Prisma.FolderCreateallowedTypesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   person: Prisma.PersonCreateNestedOneWithoutFoldersInput
@@ -716,6 +759,7 @@ export type FolderUncheckedCreateWithoutParentInput = {
   id?: number
   name: string
   path: string
+  allowedTypes?: Prisma.FolderCreateallowedTypesInput | string[]
   personId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -747,6 +791,7 @@ export type FolderUpdateToOneWithWhereWithoutChildrenInput = {
 export type FolderUpdateWithoutChildrenInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
+  allowedTypes?: Prisma.FolderUpdateallowedTypesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   person?: Prisma.PersonUpdateOneRequiredWithoutFoldersNestedInput
@@ -758,6 +803,7 @@ export type FolderUncheckedUpdateWithoutChildrenInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
+  allowedTypes?: Prisma.FolderUpdateallowedTypesInput | string[]
   personId?: Prisma.IntFieldUpdateOperationsInput | number
   parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -785,6 +831,7 @@ export type FolderCreateManyPersonInput = {
   id?: number
   name: string
   path: string
+  allowedTypes?: Prisma.FolderCreateallowedTypesInput | string[]
   parentId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -793,6 +840,7 @@ export type FolderCreateManyPersonInput = {
 export type FolderUpdateWithoutPersonInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
+  allowedTypes?: Prisma.FolderUpdateallowedTypesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parent?: Prisma.FolderUpdateOneWithoutChildrenNestedInput
@@ -804,6 +852,7 @@ export type FolderUncheckedUpdateWithoutPersonInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
+  allowedTypes?: Prisma.FolderUpdateallowedTypesInput | string[]
   parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -815,6 +864,7 @@ export type FolderUncheckedUpdateManyWithoutPersonInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
+  allowedTypes?: Prisma.FolderUpdateallowedTypesInput | string[]
   parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -824,6 +874,7 @@ export type FolderCreateManyParentInput = {
   id?: number
   name: string
   path: string
+  allowedTypes?: Prisma.FolderCreateallowedTypesInput | string[]
   personId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -832,6 +883,7 @@ export type FolderCreateManyParentInput = {
 export type FolderUpdateWithoutParentInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
+  allowedTypes?: Prisma.FolderUpdateallowedTypesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   person?: Prisma.PersonUpdateOneRequiredWithoutFoldersNestedInput
@@ -843,6 +895,7 @@ export type FolderUncheckedUpdateWithoutParentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
+  allowedTypes?: Prisma.FolderUpdateallowedTypesInput | string[]
   personId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -854,6 +907,7 @@ export type FolderUncheckedUpdateManyWithoutParentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
+  allowedTypes?: Prisma.FolderUpdateallowedTypesInput | string[]
   personId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -903,6 +957,7 @@ export type FolderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   id?: boolean
   name?: boolean
   path?: boolean
+  allowedTypes?: boolean
   personId?: boolean
   parentId?: boolean
   createdAt?: boolean
@@ -918,6 +973,7 @@ export type FolderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   name?: boolean
   path?: boolean
+  allowedTypes?: boolean
   personId?: boolean
   parentId?: boolean
   createdAt?: boolean
@@ -930,6 +986,7 @@ export type FolderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   name?: boolean
   path?: boolean
+  allowedTypes?: boolean
   personId?: boolean
   parentId?: boolean
   createdAt?: boolean
@@ -942,13 +999,14 @@ export type FolderSelectScalar = {
   id?: boolean
   name?: boolean
   path?: boolean
+  allowedTypes?: boolean
   personId?: boolean
   parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type FolderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "path" | "personId" | "parentId" | "createdAt" | "updatedAt", ExtArgs["result"]["folder"]>
+export type FolderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "path" | "allowedTypes" | "personId" | "parentId" | "createdAt" | "updatedAt", ExtArgs["result"]["folder"]>
 export type FolderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   parent?: boolean | Prisma.Folder$parentArgs<ExtArgs>
@@ -977,6 +1035,7 @@ export type $FolderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     id: number
     name: string
     path: string
+    allowedTypes: string[]
     personId: number
     parentId: number | null
     createdAt: Date
@@ -1411,6 +1470,7 @@ export interface FolderFieldRefs {
   readonly id: Prisma.FieldRef<"Folder", 'Int'>
   readonly name: Prisma.FieldRef<"Folder", 'String'>
   readonly path: Prisma.FieldRef<"Folder", 'String'>
+  readonly allowedTypes: Prisma.FieldRef<"Folder", 'String[]'>
   readonly personId: Prisma.FieldRef<"Folder", 'Int'>
   readonly parentId: Prisma.FieldRef<"Folder", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Folder", 'DateTime'>

@@ -2,6 +2,7 @@ import { BaseService } from '@/shared/BaseService';
 import { CreateFileInput, CreateFileInputStream } from './file.schema.js';
 import { ConflictError } from '@/shared/errors/http-error';
 import { randomUUID } from 'node:crypto';
+import { extname } from 'node:path';
 import { StorageService } from '../storage/storage.service.js';
 import { normalizeFileName, streamWithSize } from '@/utils/file';
 
@@ -22,6 +23,20 @@ export class FileService extends BaseService {
 
     if (data.folderId && !folder) {
       throw new ConflictError('Pasta não encontrada.');
+    }
+
+    if (folder?.allowedTypes?.length) {
+      const extension = extname(data.originalName).toLowerCase().replace('.', '');
+      const allowed = folder.allowedTypes.map((type) => type.toLowerCase());
+      const allowedExts = allowed.filter((type) => !type.includes('/'));
+      const allowedMimes = allowed.filter((type) => type.includes('/'));
+
+      const isAllowedByExt = extension && allowedExts.includes(extension);
+      const isAllowedByMime = allowedMimes.includes(data.mimeType.toLowerCase());
+
+      if (!isAllowedByExt && !isAllowedByMime) {
+        throw new ConflictError('Tipo de arquivo não permitido nesta pasta.');
+      }
     }
 
     const folderPrefix = folder ? `${folder.path}/` : '';
@@ -58,6 +73,20 @@ export class FileService extends BaseService {
 
     if (data.folderId && !folder) {
       throw new ConflictError('Pasta não encontrada.');
+    }
+
+    if (folder?.allowedTypes?.length) {
+      const extension = extname(data.originalName).toLowerCase().replace('.', '');
+      const allowed = folder.allowedTypes.map((type) => type.toLowerCase());
+      const allowedExts = allowed.filter((type) => !type.includes('/'));
+      const allowedMimes = allowed.filter((type) => type.includes('/'));
+
+      const isAllowedByExt = extension && allowedExts.includes(extension);
+      const isAllowedByMime = allowedMimes.includes(data.mimeType.toLowerCase());
+
+      if (!isAllowedByExt && !isAllowedByMime) {
+        throw new ConflictError('Tipo de arquivo não permitido nesta pasta.');
+      }
     }
 
     const folderPrefix = folder ? `${folder.path}/` : '';

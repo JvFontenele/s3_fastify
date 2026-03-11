@@ -75,6 +75,7 @@ model Folder {
   id       Int    @id @default(autoincrement())
   name     String
   path     String
+  allowedTypes String[] @default([])
 
   personId Int
   person   Person @relation(fields: [personId], references: [id])

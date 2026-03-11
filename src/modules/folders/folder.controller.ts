@@ -1,7 +1,7 @@
 import { BaseController } from '@/shared/BaseController';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { BadRequestError } from '@/shared/errors/http-error';
-import type { CreateFolderBody } from './folder.schema.js';
+import type { CreateFolderBody, UpdateFolderBody } from './folder.schema.js';
 import { FolderService } from './folder.service.js';
 
 export class FolderController extends BaseController {
@@ -41,5 +41,16 @@ export class FolderController extends BaseController {
     await this.service.deleteFolder(id, request.user.person.id);
 
     return this.noContent(reply);
+  };
+
+  update = async (
+    request: FastifyRequest<{ Params: { id: number }; Body: UpdateFolderBody }>,
+    reply: FastifyReply,
+  ) => {
+    const { id } = request.params;
+
+    const folder = await this.service.updateFolder(id, request.user.person.id, request.body);
+
+    return this.ok(reply, folder);
   };
 }

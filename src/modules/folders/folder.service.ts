@@ -1,8 +1,16 @@
 import { BaseService } from '@/shared/BaseService';
 import { ConflictError } from '@/shared/errors/http-error';
-import type { CreateFolderBody } from './folder.schema.js';
+import type { CreateFolderBody, UpdateFolderBody } from './folder.schema.js';
 
 export class FolderService extends BaseService {
+  private normalizeAllowedTypes(types?: string[] | null) {
+    if (!types) return [];
+    return types
+      .map((type) => type.trim().toLowerCase())
+      .filter(Boolean)
+      .map((type) => (type.startsWith('.') ? type.slice(1) : type));
+  }
+
   async createFolder(data: CreateFolderBody & { personId: number }) {
     const existPerson = await this.prisma.person.findUnique({ where: { id: data.personId } });
     if (!existPerson) {
@@ -39,10 +47,79 @@ export class FolderService extends BaseService {
         path,
         personId: data.personId,
         parentId: data.parentId,
+        allowedTypes: this.normalizeAllowedTypes(data.allowedTypes),
       },
     });
 
     return folder;
+  }
+
+  async updateFolder(id: number, personId: number, data: UpdateFolderBody) {
+    const folder = await this.prisma.folder.findFirst({
+      where: { id, personId },
+    });
+
+    if (!folder) {
+      throw new ConflictError('Pasta não encontrada.');
+    }
+
+    const updates: { name?: string; path?: string; allowedTypes?: string[] } = {};
+
+    if (data.name && data.name !== folder.name) {
+      const existsFolder = await this.prisma.folder.findFirst({
+        where: {
+          personId,
+          parentId: folder.parentId ?? null,
+          name: data.name,
+        },
+      });
+
+      if (existsFolder) {
+        throw new ConflictError('Já existe uma pasta com esse nome.');
+      }
+
+      const parent = folder.parentId
+        ? await this.prisma.folder.findFirst({
+            where: { id: folder.parentId, personId },
+          })
+        : null;
+
+      const newPath = parent ? `${parent.path}/${data.name}` : data.name;
+      const oldPath = folder.path;
+
+      updates.name = data.name;
+      updates.path = newPath;
+
+      if (oldPath !== newPath) {
+        const children = await this.prisma.folder.findMany({
+          where: { personId, path: { startsWith: `${oldPath}/` } },
+        });
+
+        await Promise.all(
+          children.map((child) =>
+            this.prisma.folder.update({
+              where: { id: child.id },
+              data: {
+                path: `${newPath}${child.path.slice(oldPath.length)}`,
+              },
+            }),
+          ),
+        );
+      }
+    }
+
+    if (data.allowedTypes !== undefined) {
+      updates.allowedTypes = this.normalizeAllowedTypes(data.allowedTypes);
+    }
+
+    if (Object.keys(updates).length === 0) {
+      return folder;
+    }
+
+    return this.prisma.folder.update({
+      where: { id },
+      data: updates,
+    });
   }
 
   async listFolders(

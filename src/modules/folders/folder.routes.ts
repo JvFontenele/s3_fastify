@@ -7,6 +7,7 @@ import {
   FolderListQuerySchema,
   FolderResponseSchema,
   GetFolderParamsSchema,
+  UpdateFolderBodySchema,
 } from './folder.schema.js';
 import { PaginatedResponseSchema } from '@/schemas/pagination.schema';
 
@@ -58,5 +59,20 @@ export default async function folderRoutes(app: FastifyInstance) {
       },
     },
     controller.delete,
+  );
+
+  app.patch(
+    '/:id',
+    {
+      schema: {
+        summary: 'Update folder name or allowed types',
+        tags: [tag],
+        security: [{ bearerAuth: [] }],
+        params: GetFolderParamsSchema,
+        body: UpdateFolderBodySchema,
+        response: { 200: FolderResponseSchema },
+      },
+    },
+    controller.update,
   );
 }

@@ -137,7 +137,7 @@ export class FileService extends BaseService {
   ) {
     const where = {
       personId,
-      ...(folderId !== undefined ? { folderId } : {}),
+      folderId: folderId !== undefined ? folderId : null,
     };
 
     const [data, total] = await Promise.all([

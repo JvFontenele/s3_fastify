@@ -136,4 +136,21 @@ describe('FileService', () => {
     expect(storageMocks.delete).toHaveBeenCalledWith('1/file.txt')
     expect(prisma.file.delete).toHaveBeenCalledWith({ where: { id: 5 } })
   })
+
+  it('lists only root files when folderId is not provided', async () => {
+    prisma.file.findMany.mockResolvedValue([])
+    prisma.file.count.mockResolvedValue(0)
+
+    const service = new FileService(prisma)
+    await service.findFilesByPersonId(1, { skip: 0, take: 10 })
+
+    expect(prisma.file.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { personId: 1, folderId: null },
+      }),
+    )
+    expect(prisma.file.count).toHaveBeenCalledWith({
+      where: { personId: 1, folderId: null },
+    })
+  })
 })

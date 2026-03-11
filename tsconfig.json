@@ -15,5 +15,6 @@
     "paths": {
       "@/*": ["./src/*"]
     }
-  }
+  },
+  "exclude": ["**/*.test.ts", "**/*.spec.ts", "**/__tests__/**", "vitest.config.ts"]
 }

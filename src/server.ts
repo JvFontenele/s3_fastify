@@ -65,6 +65,7 @@ app.register(errorPlugin);
 app.register(autoload, {
   dir: join(__dirname, 'modules'),
   routeParams: true,
+  ignorePattern: /(^|[\\/])__tests__([\\/]|$)|\.(test|spec)\.(t|j)s$/,
 });
 
 app.addHook('onRoute', ({ method, path }) => {

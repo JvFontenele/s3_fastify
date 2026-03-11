@@ -179,4 +179,29 @@ describe('folders routes integration', () => {
 
     await app.close()
   })
+
+  it('gets folder by id', async () => {
+    const { app } = await buildApp()
+
+    const created = await app.inject({
+      method: 'POST',
+      url: '/folders',
+      payload: { name: 'Projetos' },
+    })
+
+    const folderId = created.json().id
+    const response = await app.inject({
+      method: 'GET',
+      url: `/folders/${folderId}`,
+    })
+
+    expect(response.statusCode).toBe(200)
+    expect(response.json()).toMatchObject({
+      id: folderId,
+      name: 'Projetos',
+      path: 'Projetos',
+    })
+
+    await app.close()
+  })
 })

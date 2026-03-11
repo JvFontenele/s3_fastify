@@ -146,6 +146,18 @@ export class FolderService extends BaseService {
     return { data, total };
   }
 
+  async getFolderById(id: number, personId: number) {
+    const folder = await this.prisma.folder.findFirst({
+      where: { id, personId },
+    });
+
+    if (!folder) {
+      throw new ConflictError('Pasta não encontrada.');
+    }
+
+    return folder;
+  }
+
   async deleteFolder(id: number, personId: number) {
     const folder = await this.prisma.folder.findFirst({
       where: { id, personId },

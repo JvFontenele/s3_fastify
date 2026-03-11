@@ -47,6 +47,20 @@ export default async function folderRoutes(app: FastifyInstance) {
     controller.list,
   );
 
+  app.get(
+    '/:id',
+    {
+      schema: {
+        summary: 'Get folder by id',
+        tags: [tag],
+        security: [{ bearerAuth: [] }],
+        params: GetFolderParamsSchema,
+        response: { 200: FolderResponseSchema },
+      },
+    },
+    controller.getById,
+  );
+
   app.delete(
     '/:id',
     {

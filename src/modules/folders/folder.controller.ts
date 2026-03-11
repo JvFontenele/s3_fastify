@@ -35,6 +35,13 @@ export class FolderController extends BaseController {
     return this.paginated(reply, data, total, page, limit);
   };
 
+  getById = async (request: FastifyRequest<{ Params: { id: number } }>, reply: FastifyReply) => {
+    const { id } = request.params;
+    const folder = await this.service.getFolderById(id, request.user.person.id);
+
+    return this.ok(reply, folder);
+  };
+
   delete = async (request: FastifyRequest<{ Params: { id: number } }>, reply: FastifyReply) => {
     const { id } = request.params;
 

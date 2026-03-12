@@ -9,3 +9,11 @@ export async function authHook(request: FastifyRequest, reply: FastifyReply) {
     throw new UnauthorizedError('Invalid or expired token');
   }
 }
+
+export async function optionalAuthHook(request: FastifyRequest) {
+  try {
+    await request.jwtVerify();
+  } catch {
+    // rota pública/compartilhada: sem token continua sem usuário autenticado
+  }
+}

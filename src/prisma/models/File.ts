@@ -45,6 +45,8 @@ export type FileMinAggregateOutputType = {
   fileName: string | null
   key: string | null
   fileUrl: string | null
+  accessKey: string | null
+  isPublic: boolean | null
   mimeType: string | null
   size: bigint | null
   personId: number | null
@@ -58,6 +60,8 @@ export type FileMaxAggregateOutputType = {
   fileName: string | null
   key: string | null
   fileUrl: string | null
+  accessKey: string | null
+  isPublic: boolean | null
   mimeType: string | null
   size: bigint | null
   personId: number | null
@@ -71,6 +75,8 @@ export type FileCountAggregateOutputType = {
   fileName: number
   key: number
   fileUrl: number
+  accessKey: number
+  isPublic: number
   mimeType: number
   size: number
   personId: number
@@ -100,6 +106,8 @@ export type FileMinAggregateInputType = {
   fileName?: true
   key?: true
   fileUrl?: true
+  accessKey?: true
+  isPublic?: true
   mimeType?: true
   size?: true
   personId?: true
@@ -113,6 +121,8 @@ export type FileMaxAggregateInputType = {
   fileName?: true
   key?: true
   fileUrl?: true
+  accessKey?: true
+  isPublic?: true
   mimeType?: true
   size?: true
   personId?: true
@@ -126,6 +136,8 @@ export type FileCountAggregateInputType = {
   fileName?: true
   key?: true
   fileUrl?: true
+  accessKey?: true
+  isPublic?: true
   mimeType?: true
   size?: true
   personId?: true
@@ -226,6 +238,8 @@ export type FileGroupByOutputType = {
   fileName: string
   key: string
   fileUrl: string
+  accessKey: string
+  isPublic: boolean
   mimeType: string
   size: bigint
   personId: number
@@ -262,6 +276,8 @@ export type FileWhereInput = {
   fileName?: Prisma.StringFilter<"File"> | string
   key?: Prisma.StringFilter<"File"> | string
   fileUrl?: Prisma.StringFilter<"File"> | string
+  accessKey?: Prisma.StringFilter<"File"> | string
+  isPublic?: Prisma.BoolFilter<"File"> | boolean
   mimeType?: Prisma.StringFilter<"File"> | string
   size?: Prisma.BigIntFilter<"File"> | bigint | number
   personId?: Prisma.IntFilter<"File"> | number
@@ -270,6 +286,7 @@ export type FileWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"File"> | Date | string
   person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
   folder?: Prisma.XOR<Prisma.FolderNullableScalarRelationFilter, Prisma.FolderWhereInput> | null
+  shares?: Prisma.FileShareListRelationFilter
 }
 
 export type FileOrderByWithRelationInput = {
@@ -277,6 +294,8 @@ export type FileOrderByWithRelationInput = {
   fileName?: Prisma.SortOrder
   key?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
+  accessKey?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
   mimeType?: Prisma.SortOrder
   size?: Prisma.SortOrder
   personId?: Prisma.SortOrder
@@ -285,16 +304,19 @@ export type FileOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   person?: Prisma.PersonOrderByWithRelationInput
   folder?: Prisma.FolderOrderByWithRelationInput
+  shares?: Prisma.FileShareOrderByRelationAggregateInput
 }
 
 export type FileWhereUniqueInput = Prisma.AtLeast<{
   id?: number
   key?: string
+  accessKey?: string
   AND?: Prisma.FileWhereInput | Prisma.FileWhereInput[]
   OR?: Prisma.FileWhereInput[]
   NOT?: Prisma.FileWhereInput | Prisma.FileWhereInput[]
   fileName?: Prisma.StringFilter<"File"> | string
   fileUrl?: Prisma.StringFilter<"File"> | string
+  isPublic?: Prisma.BoolFilter<"File"> | boolean
   mimeType?: Prisma.StringFilter<"File"> | string
   size?: Prisma.BigIntFilter<"File"> | bigint | number
   personId?: Prisma.IntFilter<"File"> | number
@@ -303,13 +325,16 @@ export type FileWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"File"> | Date | string
   person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
   folder?: Prisma.XOR<Prisma.FolderNullableScalarRelationFilter, Prisma.FolderWhereInput> | null
-}, "id" | "key">
+  shares?: Prisma.FileShareListRelationFilter
+}, "id" | "key" | "accessKey">
 
 export type FileOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
   key?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
+  accessKey?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
   mimeType?: Prisma.SortOrder
   size?: Prisma.SortOrder
   personId?: Prisma.SortOrder
@@ -331,6 +356,8 @@ export type FileScalarWhereWithAggregatesInput = {
   fileName?: Prisma.StringWithAggregatesFilter<"File"> | string
   key?: Prisma.StringWithAggregatesFilter<"File"> | string
   fileUrl?: Prisma.StringWithAggregatesFilter<"File"> | string
+  accessKey?: Prisma.StringWithAggregatesFilter<"File"> | string
+  isPublic?: Prisma.BoolWithAggregatesFilter<"File"> | boolean
   mimeType?: Prisma.StringWithAggregatesFilter<"File"> | string
   size?: Prisma.BigIntWithAggregatesFilter<"File"> | bigint | number
   personId?: Prisma.IntWithAggregatesFilter<"File"> | number
@@ -343,12 +370,15 @@ export type FileCreateInput = {
   fileName: string
   key: string
   fileUrl: string
+  accessKey?: string
+  isPublic?: boolean
   mimeType: string
   size: bigint | number
   createdAt?: Date | string
   updatedAt?: Date | string
   person: Prisma.PersonCreateNestedOneWithoutFilesInput
   folder?: Prisma.FolderCreateNestedOneWithoutFilesInput
+  shares?: Prisma.FileShareCreateNestedManyWithoutFileInput
 }
 
 export type FileUncheckedCreateInput = {
@@ -356,24 +386,30 @@ export type FileUncheckedCreateInput = {
   fileName: string
   key: string
   fileUrl: string
+  accessKey?: string
+  isPublic?: boolean
   mimeType: string
   size: bigint | number
   personId: number
   folderId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  shares?: Prisma.FileShareUncheckedCreateNestedManyWithoutFileInput
 }
 
 export type FileUpdateInput = {
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  accessKey?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mimeType?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   person?: Prisma.PersonUpdateOneRequiredWithoutFilesNestedInput
   folder?: Prisma.FolderUpdateOneWithoutFilesNestedInput
+  shares?: Prisma.FileShareUpdateManyWithoutFileNestedInput
 }
 
 export type FileUncheckedUpdateInput = {
@@ -381,12 +417,15 @@ export type FileUncheckedUpdateInput = {
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  accessKey?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mimeType?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   personId?: Prisma.IntFieldUpdateOperationsInput | number
   folderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shares?: Prisma.FileShareUncheckedUpdateManyWithoutFileNestedInput
 }
 
 export type FileCreateManyInput = {
@@ -394,6 +433,8 @@ export type FileCreateManyInput = {
   fileName: string
   key: string
   fileUrl: string
+  accessKey?: string
+  isPublic?: boolean
   mimeType: string
   size: bigint | number
   personId: number
@@ -406,6 +447,8 @@ export type FileUpdateManyMutationInput = {
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  accessKey?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mimeType?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -417,6 +460,8 @@ export type FileUncheckedUpdateManyInput = {
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  accessKey?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mimeType?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   personId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -440,6 +485,8 @@ export type FileCountOrderByAggregateInput = {
   fileName?: Prisma.SortOrder
   key?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
+  accessKey?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
   mimeType?: Prisma.SortOrder
   size?: Prisma.SortOrder
   personId?: Prisma.SortOrder
@@ -460,6 +507,8 @@ export type FileMaxOrderByAggregateInput = {
   fileName?: Prisma.SortOrder
   key?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
+  accessKey?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
   mimeType?: Prisma.SortOrder
   size?: Prisma.SortOrder
   personId?: Prisma.SortOrder
@@ -473,6 +522,8 @@ export type FileMinOrderByAggregateInput = {
   fileName?: Prisma.SortOrder
   key?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
+  accessKey?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
   mimeType?: Prisma.SortOrder
   size?: Prisma.SortOrder
   personId?: Prisma.SortOrder
@@ -486,6 +537,11 @@ export type FileSumOrderByAggregateInput = {
   size?: Prisma.SortOrder
   personId?: Prisma.SortOrder
   folderId?: Prisma.SortOrder
+}
+
+export type FileScalarRelationFilter = {
+  is?: Prisma.FileWhereInput
+  isNot?: Prisma.FileWhereInput
 }
 
 export type FileCreateNestedManyWithoutPersonInput = {
@@ -546,6 +602,20 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type FileCreateNestedOneWithoutSharesInput = {
+  create?: Prisma.XOR<Prisma.FileCreateWithoutSharesInput, Prisma.FileUncheckedCreateWithoutSharesInput>
+  connectOrCreate?: Prisma.FileCreateOrConnectWithoutSharesInput
+  connect?: Prisma.FileWhereUniqueInput
+}
+
+export type FileUpdateOneRequiredWithoutSharesNestedInput = {
+  create?: Prisma.XOR<Prisma.FileCreateWithoutSharesInput, Prisma.FileUncheckedCreateWithoutSharesInput>
+  connectOrCreate?: Prisma.FileCreateOrConnectWithoutSharesInput
+  upsert?: Prisma.FileUpsertWithoutSharesInput
+  connect?: Prisma.FileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.FileUpdateToOneWithWhereWithoutSharesInput, Prisma.FileUpdateWithoutSharesInput>, Prisma.FileUncheckedUpdateWithoutSharesInput>
+}
+
 export type FileCreateNestedManyWithoutFolderInput = {
   create?: Prisma.XOR<Prisma.FileCreateWithoutFolderInput, Prisma.FileUncheckedCreateWithoutFolderInput> | Prisma.FileCreateWithoutFolderInput[] | Prisma.FileUncheckedCreateWithoutFolderInput[]
   connectOrCreate?: Prisma.FileCreateOrConnectWithoutFolderInput | Prisma.FileCreateOrConnectWithoutFolderInput[]
@@ -592,11 +662,14 @@ export type FileCreateWithoutPersonInput = {
   fileName: string
   key: string
   fileUrl: string
+  accessKey?: string
+  isPublic?: boolean
   mimeType: string
   size: bigint | number
   createdAt?: Date | string
   updatedAt?: Date | string
   folder?: Prisma.FolderCreateNestedOneWithoutFilesInput
+  shares?: Prisma.FileShareCreateNestedManyWithoutFileInput
 }
 
 export type FileUncheckedCreateWithoutPersonInput = {
@@ -604,11 +677,14 @@ export type FileUncheckedCreateWithoutPersonInput = {
   fileName: string
   key: string
   fileUrl: string
+  accessKey?: string
+  isPublic?: boolean
   mimeType: string
   size: bigint | number
   folderId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  shares?: Prisma.FileShareUncheckedCreateNestedManyWithoutFileInput
 }
 
 export type FileCreateOrConnectWithoutPersonInput = {
@@ -645,6 +721,8 @@ export type FileScalarWhereInput = {
   fileName?: Prisma.StringFilter<"File"> | string
   key?: Prisma.StringFilter<"File"> | string
   fileUrl?: Prisma.StringFilter<"File"> | string
+  accessKey?: Prisma.StringFilter<"File"> | string
+  isPublic?: Prisma.BoolFilter<"File"> | boolean
   mimeType?: Prisma.StringFilter<"File"> | string
   size?: Prisma.BigIntFilter<"File"> | bigint | number
   personId?: Prisma.IntFilter<"File"> | number
@@ -653,15 +731,92 @@ export type FileScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"File"> | Date | string
 }
 
-export type FileCreateWithoutFolderInput = {
+export type FileCreateWithoutSharesInput = {
   fileName: string
   key: string
   fileUrl: string
+  accessKey?: string
+  isPublic?: boolean
   mimeType: string
   size: bigint | number
   createdAt?: Date | string
   updatedAt?: Date | string
   person: Prisma.PersonCreateNestedOneWithoutFilesInput
+  folder?: Prisma.FolderCreateNestedOneWithoutFilesInput
+}
+
+export type FileUncheckedCreateWithoutSharesInput = {
+  id?: number
+  fileName: string
+  key: string
+  fileUrl: string
+  accessKey?: string
+  isPublic?: boolean
+  mimeType: string
+  size: bigint | number
+  personId: number
+  folderId?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type FileCreateOrConnectWithoutSharesInput = {
+  where: Prisma.FileWhereUniqueInput
+  create: Prisma.XOR<Prisma.FileCreateWithoutSharesInput, Prisma.FileUncheckedCreateWithoutSharesInput>
+}
+
+export type FileUpsertWithoutSharesInput = {
+  update: Prisma.XOR<Prisma.FileUpdateWithoutSharesInput, Prisma.FileUncheckedUpdateWithoutSharesInput>
+  create: Prisma.XOR<Prisma.FileCreateWithoutSharesInput, Prisma.FileUncheckedCreateWithoutSharesInput>
+  where?: Prisma.FileWhereInput
+}
+
+export type FileUpdateToOneWithWhereWithoutSharesInput = {
+  where?: Prisma.FileWhereInput
+  data: Prisma.XOR<Prisma.FileUpdateWithoutSharesInput, Prisma.FileUncheckedUpdateWithoutSharesInput>
+}
+
+export type FileUpdateWithoutSharesInput = {
+  fileName?: Prisma.StringFieldUpdateOperationsInput | string
+  key?: Prisma.StringFieldUpdateOperationsInput | string
+  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  accessKey?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  size?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  person?: Prisma.PersonUpdateOneRequiredWithoutFilesNestedInput
+  folder?: Prisma.FolderUpdateOneWithoutFilesNestedInput
+}
+
+export type FileUncheckedUpdateWithoutSharesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  fileName?: Prisma.StringFieldUpdateOperationsInput | string
+  key?: Prisma.StringFieldUpdateOperationsInput | string
+  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  accessKey?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  size?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  personId?: Prisma.IntFieldUpdateOperationsInput | number
+  folderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type FileCreateWithoutFolderInput = {
+  fileName: string
+  key: string
+  fileUrl: string
+  accessKey?: string
+  isPublic?: boolean
+  mimeType: string
+  size: bigint | number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  person: Prisma.PersonCreateNestedOneWithoutFilesInput
+  shares?: Prisma.FileShareCreateNestedManyWithoutFileInput
 }
 
 export type FileUncheckedCreateWithoutFolderInput = {
@@ -669,11 +824,14 @@ export type FileUncheckedCreateWithoutFolderInput = {
   fileName: string
   key: string
   fileUrl: string
+  accessKey?: string
+  isPublic?: boolean
   mimeType: string
   size: bigint | number
   personId: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  shares?: Prisma.FileShareUncheckedCreateNestedManyWithoutFileInput
 }
 
 export type FileCreateOrConnectWithoutFolderInput = {
@@ -707,6 +865,8 @@ export type FileCreateManyPersonInput = {
   fileName: string
   key: string
   fileUrl: string
+  accessKey?: string
+  isPublic?: boolean
   mimeType: string
   size: bigint | number
   folderId?: number | null
@@ -718,11 +878,14 @@ export type FileUpdateWithoutPersonInput = {
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  accessKey?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mimeType?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   folder?: Prisma.FolderUpdateOneWithoutFilesNestedInput
+  shares?: Prisma.FileShareUpdateManyWithoutFileNestedInput
 }
 
 export type FileUncheckedUpdateWithoutPersonInput = {
@@ -730,11 +893,14 @@ export type FileUncheckedUpdateWithoutPersonInput = {
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  accessKey?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mimeType?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   folderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shares?: Prisma.FileShareUncheckedUpdateManyWithoutFileNestedInput
 }
 
 export type FileUncheckedUpdateManyWithoutPersonInput = {
@@ -742,6 +908,8 @@ export type FileUncheckedUpdateManyWithoutPersonInput = {
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  accessKey?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mimeType?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   folderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -754,6 +922,8 @@ export type FileCreateManyFolderInput = {
   fileName: string
   key: string
   fileUrl: string
+  accessKey?: string
+  isPublic?: boolean
   mimeType: string
   size: bigint | number
   personId: number
@@ -765,11 +935,14 @@ export type FileUpdateWithoutFolderInput = {
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  accessKey?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mimeType?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   person?: Prisma.PersonUpdateOneRequiredWithoutFilesNestedInput
+  shares?: Prisma.FileShareUpdateManyWithoutFileNestedInput
 }
 
 export type FileUncheckedUpdateWithoutFolderInput = {
@@ -777,11 +950,14 @@ export type FileUncheckedUpdateWithoutFolderInput = {
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  accessKey?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mimeType?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   personId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shares?: Prisma.FileShareUncheckedUpdateManyWithoutFileNestedInput
 }
 
 export type FileUncheckedUpdateManyWithoutFolderInput = {
@@ -789,6 +965,8 @@ export type FileUncheckedUpdateManyWithoutFolderInput = {
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   key?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  accessKey?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   mimeType?: Prisma.StringFieldUpdateOperationsInput | string
   size?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   personId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -797,12 +975,43 @@ export type FileUncheckedUpdateManyWithoutFolderInput = {
 }
 
 
+/**
+ * Count Type FileCountOutputType
+ */
+
+export type FileCountOutputType = {
+  shares: number
+}
+
+export type FileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  shares?: boolean | FileCountOutputTypeCountSharesArgs
+}
+
+/**
+ * FileCountOutputType without action
+ */
+export type FileCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FileCountOutputType
+   */
+  select?: Prisma.FileCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * FileCountOutputType without action
+ */
+export type FileCountOutputTypeCountSharesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FileShareWhereInput
+}
+
 
 export type FileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   fileName?: boolean
   key?: boolean
   fileUrl?: boolean
+  accessKey?: boolean
+  isPublic?: boolean
   mimeType?: boolean
   size?: boolean
   personId?: boolean
@@ -811,6 +1020,8 @@ export type FileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   folder?: boolean | Prisma.File$folderArgs<ExtArgs>
+  shares?: boolean | Prisma.File$sharesArgs<ExtArgs>
+  _count?: boolean | Prisma.FileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["file"]>
 
 export type FileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -818,6 +1029,8 @@ export type FileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   fileName?: boolean
   key?: boolean
   fileUrl?: boolean
+  accessKey?: boolean
+  isPublic?: boolean
   mimeType?: boolean
   size?: boolean
   personId?: boolean
@@ -833,6 +1046,8 @@ export type FileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   fileName?: boolean
   key?: boolean
   fileUrl?: boolean
+  accessKey?: boolean
+  isPublic?: boolean
   mimeType?: boolean
   size?: boolean
   personId?: boolean
@@ -848,6 +1063,8 @@ export type FileSelectScalar = {
   fileName?: boolean
   key?: boolean
   fileUrl?: boolean
+  accessKey?: boolean
+  isPublic?: boolean
   mimeType?: boolean
   size?: boolean
   personId?: boolean
@@ -856,10 +1073,12 @@ export type FileSelectScalar = {
   updatedAt?: boolean
 }
 
-export type FileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fileName" | "key" | "fileUrl" | "mimeType" | "size" | "personId" | "folderId" | "createdAt" | "updatedAt", ExtArgs["result"]["file"]>
+export type FileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fileName" | "key" | "fileUrl" | "accessKey" | "isPublic" | "mimeType" | "size" | "personId" | "folderId" | "createdAt" | "updatedAt", ExtArgs["result"]["file"]>
 export type FileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   folder?: boolean | Prisma.File$folderArgs<ExtArgs>
+  shares?: boolean | Prisma.File$sharesArgs<ExtArgs>
+  _count?: boolean | Prisma.FileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type FileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
@@ -875,12 +1094,15 @@ export type $FilePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     person: Prisma.$PersonPayload<ExtArgs>
     folder: Prisma.$FolderPayload<ExtArgs> | null
+    shares: Prisma.$FileSharePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     fileName: string
     key: string
     fileUrl: string
+    accessKey: string
+    isPublic: boolean
     mimeType: string
     size: bigint
     personId: number
@@ -1283,6 +1505,7 @@ export interface Prisma__FileClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   person<T extends Prisma.PersonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PersonDefaultArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   folder<T extends Prisma.File$folderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.File$folderArgs<ExtArgs>>): Prisma.Prisma__FolderClient<runtime.Types.Result.GetResult<Prisma.$FolderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  shares<T extends Prisma.File$sharesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.File$sharesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FileSharePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1316,6 +1539,8 @@ export interface FileFieldRefs {
   readonly fileName: Prisma.FieldRef<"File", 'String'>
   readonly key: Prisma.FieldRef<"File", 'String'>
   readonly fileUrl: Prisma.FieldRef<"File", 'String'>
+  readonly accessKey: Prisma.FieldRef<"File", 'String'>
+  readonly isPublic: Prisma.FieldRef<"File", 'Boolean'>
   readonly mimeType: Prisma.FieldRef<"File", 'String'>
   readonly size: Prisma.FieldRef<"File", 'BigInt'>
   readonly personId: Prisma.FieldRef<"File", 'Int'>
@@ -1734,6 +1959,30 @@ export type File$folderArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   include?: Prisma.FolderInclude<ExtArgs> | null
   where?: Prisma.FolderWhereInput
+}
+
+/**
+ * File.shares
+ */
+export type File$sharesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FileShare
+   */
+  select?: Prisma.FileShareSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FileShare
+   */
+  omit?: Prisma.FileShareOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileShareInclude<ExtArgs> | null
+  where?: Prisma.FileShareWhereInput
+  orderBy?: Prisma.FileShareOrderByWithRelationInput | Prisma.FileShareOrderByWithRelationInput[]
+  cursor?: Prisma.FileShareWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FileShareScalarFieldEnum | Prisma.FileShareScalarFieldEnum[]
 }
 
 /**

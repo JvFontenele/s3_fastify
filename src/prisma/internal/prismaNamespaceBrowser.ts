@@ -55,6 +55,7 @@ export const ModelName = {
   User: 'User',
   RefreshToken: 'RefreshToken',
   File: 'File',
+  FileShare: 'FileShare',
   Folder: 'Folder'
 } as const
 
@@ -117,6 +118,8 @@ export const FileScalarFieldEnum = {
   fileName: 'fileName',
   key: 'key',
   fileUrl: 'fileUrl',
+  accessKey: 'accessKey',
+  isPublic: 'isPublic',
   mimeType: 'mimeType',
   size: 'size',
   personId: 'personId',
@@ -126,6 +129,16 @@ export const FileScalarFieldEnum = {
 } as const
 
 export type FileScalarFieldEnum = (typeof FileScalarFieldEnum)[keyof typeof FileScalarFieldEnum]
+
+
+export const FileShareScalarFieldEnum = {
+  id: 'id',
+  fileId: 'fileId',
+  personId: 'personId',
+  createdAt: 'createdAt'
+} as const
+
+export type FileShareScalarFieldEnum = (typeof FileShareScalarFieldEnum)[keyof typeof FileShareScalarFieldEnum]
 
 
 export const FolderScalarFieldEnum = {

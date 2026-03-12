@@ -1,7 +1,8 @@
 import { BaseController } from '@/shared/BaseController';
 import { FileService } from './file.service.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { BadRequestError, NotFoundError } from '@/shared/errors/http-error';
+import { BadRequestError } from '@/shared/errors/http-error';
+import { ShareFileBody, UpdateFileVisibilityBody } from './file.schema.js';
 
 export class FileController extends BaseController {
   constructor(private readonly service: FileService) {
@@ -76,11 +77,49 @@ export class FileController extends BaseController {
     return this.paginated(reply, data, total, page, limit);
   };
 
-  delete = async (request: FastifyRequest<{ Params: { id: number } }>, reply: FastifyReply) => {
-    const { id } = request.params;
+  delete = async (request: FastifyRequest, reply: FastifyReply) => {
+    const { id } = request.params as { id: number };
 
     await this.service.delete(id, request.user.person.id);
 
     return this.noContent(reply);
+  };
+
+  updateVisibility = async (request: FastifyRequest, reply: FastifyReply) => {
+    const { id } = request.params as { id: number };
+    const body = request.body as UpdateFileVisibilityBody;
+    const result = await this.service.setFileVisibility(id, request.user.person.id, body.isPublic);
+
+    return this.ok(reply, result);
+  };
+
+  shareByEmail = async (request: FastifyRequest, reply: FastifyReply) => {
+    const { id } = request.params as { id: number };
+    const body = request.body as ShareFileBody;
+    const result = await this.service.addShareByEmail(id, request.user.person.id, body.email);
+    return this.created(reply, result);
+  };
+
+  unshareByEmail = async (request: FastifyRequest, reply: FastifyReply) => {
+    const { id } = request.params as { id: number };
+    const body = request.body as ShareFileBody;
+    await this.service.removeShareByEmail(id, request.user.person.id, body.email);
+    return this.noContent(reply);
+  };
+
+  listShares = async (request: FastifyRequest, reply: FastifyReply) => {
+    const { id } = request.params as { id: number };
+    const result = await this.service.listShares(id, request.user.person.id);
+    return this.ok(reply, result);
+  };
+
+  accessByKey = async (request: FastifyRequest, reply: FastifyReply) => {
+    const viewerPersonId = request.user?.person?.id;
+    const { accessKey } = request.params as { accessKey: string };
+    const { stream, fileName, mimeType } = await this.service.getFileContentByAccessKey(accessKey, viewerPersonId);
+
+    reply.header('Content-Type', mimeType);
+    reply.header('Content-Disposition', `inline; filename=\"${encodeURIComponent(fileName)}\"`);
+    return reply.send(stream);
   };
 }

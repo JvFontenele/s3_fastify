@@ -235,6 +235,7 @@ export type PersonWhereInput = {
   users?: Prisma.UserListRelationFilter
   files?: Prisma.FileListRelationFilter
   folders?: Prisma.FolderListRelationFilter
+  fileShares?: Prisma.FileShareListRelationFilter
 }
 
 export type PersonOrderByWithRelationInput = {
@@ -248,6 +249,7 @@ export type PersonOrderByWithRelationInput = {
   users?: Prisma.UserOrderByRelationAggregateInput
   files?: Prisma.FileOrderByRelationAggregateInput
   folders?: Prisma.FolderOrderByRelationAggregateInput
+  fileShares?: Prisma.FileShareOrderByRelationAggregateInput
 }
 
 export type PersonWhereUniqueInput = Prisma.AtLeast<{
@@ -264,6 +266,7 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   users?: Prisma.UserListRelationFilter
   files?: Prisma.FileListRelationFilter
   folders?: Prisma.FolderListRelationFilter
+  fileShares?: Prisma.FileShareListRelationFilter
 }, "id" | "email" | "cpfCnpj">
 
 export type PersonOrderByWithAggregationInput = {
@@ -304,6 +307,7 @@ export type PersonCreateInput = {
   users?: Prisma.UserCreateNestedManyWithoutPersonInput
   files?: Prisma.FileCreateNestedManyWithoutPersonInput
   folders?: Prisma.FolderCreateNestedManyWithoutPersonInput
+  fileShares?: Prisma.FileShareCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateInput = {
@@ -317,6 +321,7 @@ export type PersonUncheckedCreateInput = {
   users?: Prisma.UserUncheckedCreateNestedManyWithoutPersonInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutPersonInput
   folders?: Prisma.FolderUncheckedCreateNestedManyWithoutPersonInput
+  fileShares?: Prisma.FileShareUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUpdateInput = {
@@ -329,6 +334,7 @@ export type PersonUpdateInput = {
   users?: Prisma.UserUpdateManyWithoutPersonNestedInput
   files?: Prisma.FileUpdateManyWithoutPersonNestedInput
   folders?: Prisma.FolderUpdateManyWithoutPersonNestedInput
+  fileShares?: Prisma.FileShareUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateInput = {
@@ -342,6 +348,7 @@ export type PersonUncheckedUpdateInput = {
   users?: Prisma.UserUncheckedUpdateManyWithoutPersonNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutPersonNestedInput
   folders?: Prisma.FolderUncheckedUpdateManyWithoutPersonNestedInput
+  fileShares?: Prisma.FileShareUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateManyInput = {
@@ -464,6 +471,20 @@ export type PersonUpdateOneRequiredWithoutFilesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutFilesInput, Prisma.PersonUpdateWithoutFilesInput>, Prisma.PersonUncheckedUpdateWithoutFilesInput>
 }
 
+export type PersonCreateNestedOneWithoutFileSharesInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutFileSharesInput, Prisma.PersonUncheckedCreateWithoutFileSharesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutFileSharesInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutFileSharesNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutFileSharesInput, Prisma.PersonUncheckedCreateWithoutFileSharesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutFileSharesInput
+  upsert?: Prisma.PersonUpsertWithoutFileSharesInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutFileSharesInput, Prisma.PersonUpdateWithoutFileSharesInput>, Prisma.PersonUncheckedUpdateWithoutFileSharesInput>
+}
+
 export type PersonCreateNestedOneWithoutFoldersInput = {
   create?: Prisma.XOR<Prisma.PersonCreateWithoutFoldersInput, Prisma.PersonUncheckedCreateWithoutFoldersInput>
   connectOrCreate?: Prisma.PersonCreateOrConnectWithoutFoldersInput
@@ -487,6 +508,7 @@ export type PersonCreateWithoutUsersInput = {
   updatedAt?: Date | string
   files?: Prisma.FileCreateNestedManyWithoutPersonInput
   folders?: Prisma.FolderCreateNestedManyWithoutPersonInput
+  fileShares?: Prisma.FileShareCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutUsersInput = {
@@ -499,6 +521,7 @@ export type PersonUncheckedCreateWithoutUsersInput = {
   updatedAt?: Date | string
   files?: Prisma.FileUncheckedCreateNestedManyWithoutPersonInput
   folders?: Prisma.FolderUncheckedCreateNestedManyWithoutPersonInput
+  fileShares?: Prisma.FileShareUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutUsersInput = {
@@ -526,6 +549,7 @@ export type PersonUpdateWithoutUsersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   files?: Prisma.FileUpdateManyWithoutPersonNestedInput
   folders?: Prisma.FolderUpdateManyWithoutPersonNestedInput
+  fileShares?: Prisma.FileShareUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutUsersInput = {
@@ -538,6 +562,7 @@ export type PersonUncheckedUpdateWithoutUsersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   files?: Prisma.FileUncheckedUpdateManyWithoutPersonNestedInput
   folders?: Prisma.FolderUncheckedUpdateManyWithoutPersonNestedInput
+  fileShares?: Prisma.FileShareUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutFilesInput = {
@@ -549,6 +574,7 @@ export type PersonCreateWithoutFilesInput = {
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutPersonInput
   folders?: Prisma.FolderCreateNestedManyWithoutPersonInput
+  fileShares?: Prisma.FileShareCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutFilesInput = {
@@ -561,6 +587,7 @@ export type PersonUncheckedCreateWithoutFilesInput = {
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutPersonInput
   folders?: Prisma.FolderUncheckedCreateNestedManyWithoutPersonInput
+  fileShares?: Prisma.FileShareUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutFilesInput = {
@@ -588,6 +615,7 @@ export type PersonUpdateWithoutFilesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutPersonNestedInput
   folders?: Prisma.FolderUpdateManyWithoutPersonNestedInput
+  fileShares?: Prisma.FileShareUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutFilesInput = {
@@ -600,6 +628,73 @@ export type PersonUncheckedUpdateWithoutFilesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutPersonNestedInput
   folders?: Prisma.FolderUncheckedUpdateManyWithoutPersonNestedInput
+  fileShares?: Prisma.FileShareUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutFileSharesInput = {
+  name: string
+  email?: string | null
+  cpfCnpj: string
+  type: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutPersonInput
+  files?: Prisma.FileCreateNestedManyWithoutPersonInput
+  folders?: Prisma.FolderCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutFileSharesInput = {
+  id?: number
+  name: string
+  email?: string | null
+  cpfCnpj: string
+  type: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutPersonInput
+  files?: Prisma.FileUncheckedCreateNestedManyWithoutPersonInput
+  folders?: Prisma.FolderUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutFileSharesInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutFileSharesInput, Prisma.PersonUncheckedCreateWithoutFileSharesInput>
+}
+
+export type PersonUpsertWithoutFileSharesInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutFileSharesInput, Prisma.PersonUncheckedUpdateWithoutFileSharesInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutFileSharesInput, Prisma.PersonUncheckedCreateWithoutFileSharesInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutFileSharesInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutFileSharesInput, Prisma.PersonUncheckedUpdateWithoutFileSharesInput>
+}
+
+export type PersonUpdateWithoutFileSharesInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cpfCnpj?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutPersonNestedInput
+  files?: Prisma.FileUpdateManyWithoutPersonNestedInput
+  folders?: Prisma.FolderUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutFileSharesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cpfCnpj?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutPersonNestedInput
+  files?: Prisma.FileUncheckedUpdateManyWithoutPersonNestedInput
+  folders?: Prisma.FolderUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutFoldersInput = {
@@ -611,6 +706,7 @@ export type PersonCreateWithoutFoldersInput = {
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutPersonInput
   files?: Prisma.FileCreateNestedManyWithoutPersonInput
+  fileShares?: Prisma.FileShareCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutFoldersInput = {
@@ -623,6 +719,7 @@ export type PersonUncheckedCreateWithoutFoldersInput = {
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutPersonInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutPersonInput
+  fileShares?: Prisma.FileShareUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutFoldersInput = {
@@ -650,6 +747,7 @@ export type PersonUpdateWithoutFoldersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutPersonNestedInput
   files?: Prisma.FileUpdateManyWithoutPersonNestedInput
+  fileShares?: Prisma.FileShareUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutFoldersInput = {
@@ -662,6 +760,7 @@ export type PersonUncheckedUpdateWithoutFoldersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutPersonNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutPersonNestedInput
+  fileShares?: Prisma.FileShareUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 
@@ -673,12 +772,14 @@ export type PersonCountOutputType = {
   users: number
   files: number
   folders: number
+  fileShares: number
 }
 
 export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | PersonCountOutputTypeCountUsersArgs
   files?: boolean | PersonCountOutputTypeCountFilesArgs
   folders?: boolean | PersonCountOutputTypeCountFoldersArgs
+  fileShares?: boolean | PersonCountOutputTypeCountFileSharesArgs
 }
 
 /**
@@ -712,6 +813,13 @@ export type PersonCountOutputTypeCountFoldersArgs<ExtArgs extends runtime.Types.
   where?: Prisma.FolderWhereInput
 }
 
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountFileSharesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FileShareWhereInput
+}
+
 
 export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -724,6 +832,7 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   users?: boolean | Prisma.Person$usersArgs<ExtArgs>
   files?: boolean | Prisma.Person$filesArgs<ExtArgs>
   folders?: boolean | Prisma.Person$foldersArgs<ExtArgs>
+  fileShares?: boolean | Prisma.Person$fileSharesArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["person"]>
 
@@ -762,6 +871,7 @@ export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   users?: boolean | Prisma.Person$usersArgs<ExtArgs>
   files?: boolean | Prisma.Person$filesArgs<ExtArgs>
   folders?: boolean | Prisma.Person$foldersArgs<ExtArgs>
+  fileShares?: boolean | Prisma.Person$fileSharesArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PersonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -773,6 +883,7 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     users: Prisma.$UserPayload<ExtArgs>[]
     files: Prisma.$FilePayload<ExtArgs>[]
     folders: Prisma.$FolderPayload<ExtArgs>[]
+    fileShares: Prisma.$FileSharePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1179,6 +1290,7 @@ export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.T
   users<T extends Prisma.Person$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   files<T extends Prisma.Person$filesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$filesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   folders<T extends Prisma.Person$foldersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$foldersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FolderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  fileShares<T extends Prisma.Person$fileSharesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$fileSharesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FileSharePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1672,6 +1784,30 @@ export type Person$foldersArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.FolderScalarFieldEnum | Prisma.FolderScalarFieldEnum[]
+}
+
+/**
+ * Person.fileShares
+ */
+export type Person$fileSharesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FileShare
+   */
+  select?: Prisma.FileShareSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FileShare
+   */
+  omit?: Prisma.FileShareOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileShareInclude<ExtArgs> | null
+  where?: Prisma.FileShareWhereInput
+  orderBy?: Prisma.FileShareOrderByWithRelationInput | Prisma.FileShareOrderByWithRelationInput[]
+  cursor?: Prisma.FileShareWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FileShareScalarFieldEnum | Prisma.FileShareScalarFieldEnum[]
 }
 
 /**

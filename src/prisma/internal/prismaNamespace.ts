@@ -388,6 +388,7 @@ export const ModelName = {
   User: 'User',
   RefreshToken: 'RefreshToken',
   File: 'File',
+  FileShare: 'FileShare',
   Folder: 'Folder'
 } as const
 
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "user" | "refreshToken" | "file" | "folder"
+    modelProps: "person" | "user" | "refreshToken" | "file" | "fileShare" | "folder"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -704,6 +705,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    FileShare: {
+      payload: Prisma.$FileSharePayload<ExtArgs>
+      fields: Prisma.FileShareFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FileShareFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileSharePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FileShareFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileSharePayload>
+        }
+        findFirst: {
+          args: Prisma.FileShareFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileSharePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FileShareFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileSharePayload>
+        }
+        findMany: {
+          args: Prisma.FileShareFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileSharePayload>[]
+        }
+        create: {
+          args: Prisma.FileShareCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileSharePayload>
+        }
+        createMany: {
+          args: Prisma.FileShareCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FileShareCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileSharePayload>[]
+        }
+        delete: {
+          args: Prisma.FileShareDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileSharePayload>
+        }
+        update: {
+          args: Prisma.FileShareUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileSharePayload>
+        }
+        deleteMany: {
+          args: Prisma.FileShareDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FileShareUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FileShareUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileSharePayload>[]
+        }
+        upsert: {
+          args: Prisma.FileShareUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileSharePayload>
+        }
+        aggregate: {
+          args: Prisma.FileShareAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFileShare>
+        }
+        groupBy: {
+          args: Prisma.FileShareGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FileShareGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FileShareCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FileShareCountAggregateOutputType> | number
+        }
+      }
+    }
     Folder: {
       payload: Prisma.$FolderPayload<ExtArgs>
       fields: Prisma.FolderFieldRefs
@@ -860,6 +935,8 @@ export const FileScalarFieldEnum = {
   fileName: 'fileName',
   key: 'key',
   fileUrl: 'fileUrl',
+  accessKey: 'accessKey',
+  isPublic: 'isPublic',
   mimeType: 'mimeType',
   size: 'size',
   personId: 'personId',
@@ -869,6 +946,16 @@ export const FileScalarFieldEnum = {
 } as const
 
 export type FileScalarFieldEnum = (typeof FileScalarFieldEnum)[keyof typeof FileScalarFieldEnum]
+
+
+export const FileShareScalarFieldEnum = {
+  id: 'id',
+  fileId: 'fileId',
+  personId: 'personId',
+  createdAt: 'createdAt'
+} as const
+
+export type FileShareScalarFieldEnum = (typeof FileShareScalarFieldEnum)[keyof typeof FileShareScalarFieldEnum]
 
 
 export const FolderScalarFieldEnum = {
@@ -1090,6 +1177,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   refreshToken?: Prisma.RefreshTokenOmit
   file?: Prisma.FileOmit
+  fileShare?: Prisma.FileShareOmit
   folder?: Prisma.FolderOmit
 }
 
